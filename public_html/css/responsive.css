@@ -1,0 +1,128 @@
+@media screen and (max-width: 940px) {
+  header nav ul {
+    display: block;
+  }
+  .top-logo-name {
+    display: inline;
+  }
+  .header-title {
+    margin-left: 0;
+    margin-right: 55px;
+  }
+  .menu-item {
+    border-left: 0;
+  }
+  .nav-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: #356629;
+    transition: all 0.2s ease;
+    display: none;
+  }
+  .nav-container ul {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+  }
+  .nav-container ul li {
+    display: block;
+    float: none;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+  .nav-container ul li:nth-child(1) a {
+    transition-delay: 0.2s;
+  }
+  .nav-container ul li:nth-child(2) a {
+    transition-delay: 0.3s;
+  }
+  .nav-container ul li:nth-child(3) a {
+    transition-delay: 0.4s;
+  }
+  .nav-container ul li:not(:first-child) {
+    margin-left: 0;
+  }
+  .nav-container ul li a {
+    padding: 10px 25px;
+    opacity: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transform: translateY(-20px);
+    transition: all 0.2s ease;
+  }
+  .nav-open {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    display: block;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    z-index: 9999;
+    border-radius: 50%;
+  }
+  .nav-open i {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #efefef;
+    border-radius: 2px;
+    margin-left: 14px;
+  }
+  .nav-open i:nth-child(1) {
+    margin-top: 16px;
+  }
+  .nav-open i:nth-child(2) {
+    margin-top: 4px;
+    opacity: 1;
+  }
+  .nav-open i:nth-child(3) {
+    margin-top: 4px;
+  }
+}
+
+#nav-checkbox:checked+.nav-open {
+  transform: rotate(45deg);
+}
+
+#nav-checkbox:checked+.nav-open i {
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+#nav-checkbox:checked+.nav-open i:nth-child(1) {
+  transform: translateY(6px) rotate(180deg);
+}
+
+#nav-checkbox:checked+.nav-open i:nth-child(2) {
+  opacity: 0;
+}
+
+#nav-checkbox:checked+.nav-open i:nth-child(3) {
+  transform: translateY(-6px) rotate(90deg);
+}
+
+#nav-checkbox:checked~.nav-container {
+  display: block;
+  opacity: 1;
+  z-index: 9990;
+}
+
+#nav-checkbox:checked~.nav-container ul li a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media screen and (max-width: 450px) {
+  .header-title {
+    opacity: 0;
+    /* Reduce font size to avoid breaking to new line and shifting image
+    on very small screen. */
+    font-size: 10px;
+  }
+}

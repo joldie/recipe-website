@@ -1,0 +1,199 @@
+html {
+  background: #efefef;
+  color: #444444;
+  font-family: 'Cutive Mono', sans-serif;
+  line-height: 1.6;
+  min-height: 100%;
+  position: relative;
+  /* Makes text more crisp, clear on all browsers: */
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  /* Browser accounts for any border and padding in the values specified for
+  an element's width and height. */
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: 1.2;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  /* Bottom margin = footer height */
+  margin: 0 0 100px;
+  padding-top: 70px;
+}
+
+.normal-text {
+  font-weight: normal;
+}
+
+.header-title-bold {
+  font-weight: bold;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  /* Controls the vertical stacking order of elements that overlap: */
+  z-index: 1000;
+  height: 70px;
+  width: 100%;
+  /*background: #294766;*/
+  background: #356629;
+  color: #efefef;
+  text-align: justify;
+  box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
+}
+
+header::after {
+  /* Pseudo element forces a line-break to justify content as desired. */
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+header h1, header nav {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+}
+
+header h1 {
+  height: 100%;
+}
+
+header h1::before {
+  /* Pseudo element used to vertically align content. */
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.top-logo-name {
+  display: inline-block;
+}
+
+.top-logo-name .fa-utensils {
+  padding-left: 20px;
+  vertical-align: middle;
+}
+
+.menu-item {
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-left: 0.5px solid #efefef;
+}
+
+.hidden {
+  display: none;
+}
+
+.content-header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: 1px solid #efefef;
+  box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
+}
+
+input[type=text] {
+  background-color: white;
+  background-image: url('../images/search-icon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding: 12px 20px 12px 40px;
+  transition: width 0.4s ease-in-out;
+  -webkit-transition: width 0.4s ease-in-out;
+  width: 350px;
+}
+
+input[type=text]:focus {
+  width: 90%;
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.card {
+  border: 1px solid #efefef;
+  box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: all .3s ease;
+}
+
+.card:hover {
+  box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* Following settings keep image width:height ratio fixed. */
+  /* 16:9 ratio --> 9/16 = 0.5625 */
+  height: 0;
+  padding-bottom: 56.25%;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 10px;
+}
+
+.recipe-content {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 40px;
+}
+
+#recipe-image {
+  height: 300px;
+}
+
+footer {
+  /* Footer stays at bottom of page. */
+  bottom: 0;
+  height: 40px;
+  left: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.cc-image {
+  vertical-align: middle;
+  width: 20px;
+}
