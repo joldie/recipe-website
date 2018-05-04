@@ -37,6 +37,7 @@ if ($result !== null) {
     $dom->getElementById('recipe-name')->nodeValue = $result['name'];
     $dom->getElementById('recipe-description')->nodeValue = $result['description'];
     $dom->getElementById('serves')->nodeValue = $result['serves'];
+    $original_num_serves = $result['serves'];
     $dom->getElementById('preptime')->nodeValue = $result['preptime'];
     $dom->getElementById('cooktime')->nodeValue = $result['cooktime'];
     // Only display credit text/link if value found in DB
@@ -71,5 +72,92 @@ if ($result !== null) {
     // Display "recipe not found" page
     require 'recipe_not_found.view.php';
 }
+
+echo <<<_END
+
+	<script>
+
+	var MAX_SERVES = 12;
+
+  var originalIngredientQtys = [];
+
+  function getOriginalIngredientQtys(){
+    var listItems = $("#ingredients-list li");
+    listItems.each(function(idx, li) {
+      originalIngredientQtys.push($(li).text().substring(0,$(li).text().indexOf(' ')));
+    });
+  }
+
+  function updateIngredientQtys(original_num_serves, new_num_serves){
+      var listItems = $("#ingredients-list li");
+      listItems.each(function(idx, li) {
+        var oldVal = $(li).text().substring(0,$(li).text().indexOf(' '));
+        var newVal = originalIngredientQtys[idx] * new_num_serves / original_num_serves;
+        newVal = Number(newVal.toPrecision(3)).toString();
+        $(li).text(newVal + $(li).text().substring($(li).text().indexOf(' '), $(li).text().length));
+      });
+    }
+
+	// jQuery code on page load
+	$(function () {
+
+    getOriginalIngredientQtys();
+
+    $('#plus').click(function(e){
+        // Stop acting like a button
+        e.preventDefault();
+
+        // Get the current value
+        var currentVal = parseInt($('#serves').text());
+
+        var newVal = 0;
+
+        // If is not undefined and not above maximum number of guests, increment
+        if (!isNaN(currentVal)) {
+            if (currentVal < MAX_SERVES) {
+              newVal = currentVal + 1;
+              $('#serves').text(newVal);
+            }
+            else {
+              newVal = MAX_SERVES;
+            }
+        } else {
+            // Otherwise set value to 1
+            newVal = 1;
+            $('#serves').text(newVal);
+        }
+        updateIngredientQtys($original_num_serves, newVal);
+    });
+
+    $('#minus').click(function(e) {
+        // Stop acting like a button
+        e.preventDefault();
+
+        // Get the current value
+        var currentVal = parseInt($('#serves').text());
+
+        var newVal = 0;
+
+        // If it is not undefined or value is greater than 1, decrement
+        if (!isNaN(currentVal) && currentVal > 1) {
+            newVal = currentVal - 1;
+            $('#serves').text(newVal);
+
+        } else {
+            // Otherwise set value to 1
+            newVal = 1;
+            $('#serves').text(newVal);
+        }
+        updateIngredientQtys($original_num_serves, newVal);
+    });
+
+	});
+
+
+
+	</script>
+
+_END
+;
 
 require 'common_bottom.php';

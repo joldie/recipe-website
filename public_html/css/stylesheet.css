@@ -116,7 +116,7 @@ header h1::before {
   box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
 }
 
-input[type=text] {
+.searchbox {
   background-color: white;
   background-image: url('../images/search-icon.png');
   background-position: 10px 10px;
@@ -129,7 +129,7 @@ input[type=text] {
   width: 350px;
 }
 
-input[type=text]:focus {
+.searchbox:focus {
   width: 90%;
 }
 
@@ -190,12 +190,8 @@ input[type=text]:focus {
   width: inherit;
 }
 
-.minus {
-  vertical-align: middle;
-}
-
-.plus {
-  vertical-align: middle;
+.plusminus {
+  padding: 0 3px 2px 3px;
 }
 
 .recipe-content-lists {
