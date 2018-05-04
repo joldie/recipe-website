@@ -171,14 +171,29 @@ input[type=text]:focus {
   padding: 10px;
 }
 
-.recipe-content {
+.recipe-content-grid {
+  display: grid;
+  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, auto));
+  justify-content: center;
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 40px;
+  padding: 0;
+}
+
+.recipe-content-image {
+  width: 100%;
 }
 
 #recipe-image {
-  height: 300px;
+  width: inherit;
+}
+
+.recipe-content-lists {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 20px;
 }
 
 footer {
@@ -196,4 +211,39 @@ footer {
 .cc-image {
   vertical-align: middle;
   width: 20px;
+}
+
+/* For debugging only: */
+
+/*
+* {
+  outline: 2px dotted red
+}
+
+* * {
+  outline: 2px dotted green
+}
+
+* * * {
+  outline: 2px dotted orange
+}
+
+* * * * {
+  outline: 2px dotted blue
+}
+
+* * * * * {
+  outline: 1px solid red
+}
+
+* * * * * * {
+  outline: 1px solid green
+}
+
+* * * * * * * {
+  outline: 1px solid orange
+}
+
+* * * * * * * * {
+  outline: 1px solid blue
 }
