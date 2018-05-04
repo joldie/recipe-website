@@ -18,11 +18,11 @@ try {
 $collection = $client->$db_name->$db_collection;
 
 // Dummy recipe data for testing...
-$name = "Vegan Pizza";
+$name = "Teriyaki Tofu and Veggie Stir-Fry";
 $date = date("Y-m-d H:i:s", time());
 $description = "Recipe description";
-$credit = "Vegan Richa";
-$credit_link = "https://www.veganricha.com/2016/08/easy-veggie-vegan-pizza.html";
+$credit = "Recipe website";
+$credit_link = "";
 $tags = ['dinner', 'pasta'];
 $serves = 1;
 $preptime = 15;
@@ -37,8 +37,8 @@ $step2 = "Mix all ingredients.";
 $step3 = "Cook.";
 $step4 = "Eat!";
 $steps = [$step1, $step2, $step3, $step4];
-$image = new MongoDB\BSON\Binary(file_get_contents("images/vegan-pizza.jpg"), MongoDB\BSON\Binary::TYPE_GENERIC);
-$image_type = "jpg";
+$image = new MongoDB\BSON\Binary(file_get_contents("images/stir-fry.jpeg"), MongoDB\BSON\Binary::TYPE_GENERIC);
+$image_type = "jpeg";
 
 // Only insert recipe if not already in DB
 $result = $collection->findOne([ 'name' => $name]);

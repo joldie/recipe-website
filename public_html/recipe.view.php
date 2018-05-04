@@ -13,7 +13,11 @@
 			<table class='recipe-numbers-table'>
 				<tr>
 					<td>Serves:</td>
-					<td><span id='serves'>?</span></td>
+					<td>
+						 <a href=""><i class="minus fas fa-minus"></i></a>
+						 <span id='serves'>?</span>
+						 <a href=""><i class="plus fas fa-plus"></i></a>
+					 </td>
 				</tr>
 				<tr>
 					<td>Prep. time:</td>
@@ -23,9 +27,9 @@
 					<td>Cooking time:</td>
 					<td><span id='cooktime'>?</span> min</td>
 				</tr>
-				<tr>
+				<tr id="credit_row">
 					<td>Credit:</td>
-					<td><span id='credit'>?</span></td>
+					<td id="credit_text">?</td>
 				</tr>
 			</table>
 </div>

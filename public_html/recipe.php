@@ -39,14 +39,16 @@ if ($result !== null) {
     $dom->getElementById('serves')->nodeValue = $result['serves'];
     $dom->getElementById('preptime')->nodeValue = $result['preptime'];
     $dom->getElementById('cooktime')->nodeValue = $result['cooktime'];
+    // Only display credit text/link if value found in DB
     if ($result['credit'] == null) {
-      // TODO: Hide credit text
-      //$dom->getElementById('credit')->...
+      $dom->getElementById('credit_row')->nodeValue = '';
     } elseif ($result['credit_link'] == null) {
-      $dom->getElementById('credit')->nodeValue = $result['cooktime'];
+      $dom->getElementById('credit_text')->nodeValue = $result['credit'];
     } else {
-      // TODO: Add link
-      //$dom->getElementById('credit')->nodeValue = "<a href='" . $result['credit_link'] . "'>" . $result['credit'] . "</a>";
+      $dom->getElementById('credit_text')->nodeValue = '';
+      $new_item = $dom->createElement('a', $result['credit']);
+      $new_item->setAttribute("href",$result['credit_link']);
+      $dom->getElementById('credit_text')->appendChild($new_item);
     }
 
     foreach ($result['ingredients'] as $ingredient) {

@@ -190,6 +190,14 @@ input[type=text]:focus {
   width: inherit;
 }
 
+.minus {
+  vertical-align: middle;
+}
+
+.plus {
+  vertical-align: middle;
+}
+
 .recipe-content-lists {
   margin-left: 5%;
   margin-right: 5%;
