@@ -15,16 +15,17 @@ try {
 }
 
 // Get recipe ID from URL, sanitise input and create MongoDB ID object
+$id = htmlspecialchars($_GET['id']);
 try {
     // Exception will be thrown if ID in URL not in expected format
-    $id = new \MongoDB\BSON\ObjectId(htmlspecialchars($_GET['id']));
+    $mongodb_id = new \MongoDB\BSON\ObjectId($id);
 } catch (Exception $e) {
     // Continue execution, regardless
 }
 
 // Check if recipe already in DB
 $collection = $client->$db_name->$db_collection;
-$result = $collection->findOne([ '_id' => $id]);
+$result = $collection->findOne([ '_id' => $mongodb_id]);
 
 // Only update HTML if recipe in DB, otherwise display default page
 if ($result !== null) {
@@ -73,6 +74,8 @@ if ($result !== null) {
     require 'recipe_not_found.view.php';
 }
 
+//echo "<script> $('#edit-button-link').attr('href', 'editrecipe.php?id=$id') </script>";
+
 echo <<<_END
 
 	<script>
@@ -112,7 +115,7 @@ echo <<<_END
 
         var newVal = 0;
 
-        // If is not undefined and not above maximum number of guests, increment
+        // If is not undefined and not above maximum number of serves, increment
         if (!isNaN(currentVal)) {
             if (currentVal < MAX_SERVES) {
               newVal = currentVal + 1;
@@ -150,6 +153,8 @@ echo <<<_END
         }
         updateIngredientQtys($original_num_serves, newVal);
     });
+
+    $('#edit-button-link').attr('href', 'editrecipe.php?id=$id');
 
 	});
 

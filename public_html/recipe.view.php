@@ -6,7 +6,7 @@
 
 		<div class='recipe-content-main'>
 			<h1 id='recipe-name'>Recipe name</h1>
-			<p id='recipe-decription'>
+			<p id='recipe-description'>
 				No description.
 			</p>
 
@@ -14,9 +14,11 @@
 				<tr>
 					<td>Serves:</td>
 					<td>
-						<input type="button" id="minus" value="-" class="plusminus" />
+						<!--<input type="button" id="minus" value="-" class="plusminus" />-->
+						<button id="minus" class="plusminus"><i class="fas fa-minus"></i></button>
 						<span id='serves'>1</span>
-            <input type="button" id="plus" value="+" class="plusminus" />
+						<button id="plus" class="plusminus"><i class="fas fa-plus"></i></button>
+            <!--<input type="button" id="plus" value="+" class="plusminus" />-->
 					 </td>
 				</tr>
 				<tr>
@@ -41,5 +43,10 @@
 				<h3>Method:</h3>
 				<ol id='steps-list'>
 				</ol>
+			</div>
+			<div class="recipe-content-lists right-align">
+				<a id="edit-button-link" href="index.php">
+					<button name="edit" id="edit-button"><i class="fas fa-edit"></i> Edit</button>
+				</a>
 			</div>
 </main>

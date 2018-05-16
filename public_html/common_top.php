@@ -18,7 +18,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Cutive+Mono:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/stylesheet.css">
 	<link rel="stylesheet" href="css/responsive.css">
-	<link rel="icon" type="image/png" href="images/favicon.png">
+	<link rel="icon" type="image/png" href="images/favicon.svg">
 
 	<!-- JavaScript libraries -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>

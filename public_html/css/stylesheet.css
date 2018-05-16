@@ -2,6 +2,8 @@ html {
   background: #efefef;
   color: #444444;
   font-family: 'Cutive Mono', sans-serif;
+  /*font-display: swap; /* Shows fallback font immediately to user, while webfont
+  is being downloaded */
   line-height: 1.6;
   min-height: 100%;
   position: relative;
@@ -191,13 +193,71 @@ header h1::before {
 }
 
 .plusminus {
-  padding: 0 3px 2px 3px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+
+.fa-minus, .fa-plus {
+  font-size: 80%;
 }
 
 .recipe-content-lists {
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 20px;
+}
+
+.right-align {
+  /*text-align: right;*/
+}
+
+.flex-container-centered {
+  display: flex;
+  justify-content: center;
+}
+
+.add-recipe-container {
+  margin: 20px 3% 0 3%;
+  max-width: 600px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.small-input {
+  width: 100px;
+}
+
+.save-button-text {
+  margin: 5px;
+}
+
+.ingredient-input {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  display: inline-block;
+  /*margin-bottom: 3px;*/
+  padding: 3px;
+}
+
+.ingredient-item-container {
+  display: inline;
+}
+
+.img-preview-div {
+  margin-top: 10px;
+}
+
+.img-preview {
+  margin-left: 25%;
+  margin-right: 25%;
+  width: 50%;
+}
+
+.submit-buttons-div {
+  margin-top: 40px;
+  text-align: right;
 }
 
 footer {

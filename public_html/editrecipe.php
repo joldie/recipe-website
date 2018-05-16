@@ -1,5 +1,7 @@
 <?php
 
+require 'common_top.php';
+
 // Connect to MongoDB database
 require 'vendor/autoload.php'; // Include Composer's autoloader
 require_once '../db_login.php';
@@ -15,8 +17,8 @@ try {
 $collection = $client->$db_name->$db_collection;
 
 if (isset($_POST['discard'])) {
-  // Redirect back to home page
-  echo "<script> window.location.replace('index.php') </script>";
+  // Redirect back to recipe page
+  echo "<script> window.location.replace('recipe.php?id={$_GET['id']}') </script>";
   die();
 } elseif (isset($_POST['name'])) {
   // If user inputted data, check and insert into database
@@ -51,13 +53,15 @@ if (isset($_POST['discard'])) {
     $image_type = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
   }
   else {
-    // Upload dummy image
-    $image = new MongoDB\BSON\Binary(file_get_contents("images/image.png"), MongoDB\BSON\Binary::TYPE_GENERIC);
-    $image_type = 'png';
+    // No new image selected by user, so leave unchanged
+    $image = '';
   }
 
-  // Insert recipe into DB
-  $result = $collection->insertOne([
+  // Update recipe in DB
+  $id = htmlspecialchars($_GET['id']);
+  $mongodb_id = new \MongoDB\BSON\ObjectId($id);
+  $result = $collection->updateOne([ '_id' => $mongodb_id],[
+    '$set' => [
     'name' => $name,
     'date' => $date,
     'description' => $description,
@@ -68,21 +72,115 @@ if (isset($_POST['discard'])) {
     'credit_link' => $credit_link,
     'tags' => $tags,
     'ingredients' => $ingredients,
-    'steps' => $steps,
-		'image' => $image,
-		'image_type' => $image_type
-	]);
+    'steps' => $steps
+  ]]);
+  // Only update image if new one selected by user
+  if ($image !== '') {
+    $result = $collection->updateOne([ '_id' => $mongodb_id],[
+      '$set' => [
+  		'image' => $image,
+  		'image_type' => $image_type
+  	]]);
+  }
 
   echo "<script> alert('Recipe successfully saved.') </script>";
 
   // Redirect to newly created recipe page
-  echo "<script> window.location.replace('recipe.php?id={$result->getInsertedId()}') </script>";
+  echo "<script> window.location.replace('recipe.php?id={$_GET['id']}') </script>";
   die();
 
 }
 
-require 'common_top.php';
-require 'addrecipe.view.php';
+// Get recipe ID from URL (if available), sanitise input and create MongoDB ID object
+$id = htmlspecialchars($_GET['id']);
+try {
+    // Exception will be thrown if ID in URL not in expected format
+    $mongodb_id = new \MongoDB\BSON\ObjectId($id);
+} catch (Exception $e) {
+    // Continue execution, regardless
+}
+
+if ($mongodb_id !== null) {
+  //echo "Valid recipe ID...";
+
+  $result = $collection->findOne([ '_id' => $mongodb_id]);
+
+  // If recipe in DB, display current values in form
+  if ($result !== null) {
+    //echo "Recipe in DB...";
+    $dom = new DOMDocument();
+    // HTML template for displaying recipe
+    $template_html = file_get_contents("addrecipe.view.php");
+    // Options prevent addition of doctype, <html> and <body> tags
+    $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    $dom->getElementById('main-header')->nodeValue = "Edit Recipe";
+    $dom->getElementById('recipe-name')->setAttribute("value", $result['name']);
+    $dom->getElementById('recipe-description')->nodeValue = $result['description'];
+    $dom->getElementById('serves')->setAttribute("value", $result['serves']);
+    $dom->getElementById('preptime')->setAttribute("value", $result['preptime']);
+    $dom->getElementById('cooktime')->setAttribute("value", $result['cooktime']);
+    $dom->getElementById('credit')->setAttribute("value", $result['credit']);
+    $dom->getElementById('credit_link')->setAttribute("value", $result['credit_link']);
+
+    $count = 1;
+    foreach ($result['ingredients'] as $ingredient) {
+      if ($count == 1) {
+        $dom->getElementById('qty1')->setAttribute("value", $ingredient['qty']);
+        $dom->getElementById('unit1')->setAttribute("value", $ingredient['unit']);
+        $dom->getElementById('item1')->setAttribute("value", $ingredient['item']);
+      } else {
+        $new_item = $dom->getElementById('ingredient1')->cloneNode(true);
+        $new_item->setAttribute("id", 'ingredient' . $count);
+        $new_item->getElementsByTagName('*')->item(0)->setAttribute("id", 'qty' . $count);
+        $new_item->getElementsByTagName('*')->item(0)->setAttribute("name", 'qty' . $count);
+        $new_item->getElementsByTagName('*')->item(0)->setAttribute("value", $ingredient['qty']);
+        $new_item->getElementsByTagName('*')->item(1)->setAttribute("id", 'unit' . $count);
+        $new_item->getElementsByTagName('*')->item(1)->setAttribute("name", 'unit' . $count);
+        $new_item->getElementsByTagName('*')->item(1)->setAttribute("value", $ingredient['unit']);
+        $new_item->getElementsByTagName('*')->item(2)->setAttribute("id", 'item' . $count);
+        $new_item->getElementsByTagName('*')->item(2)->setAttribute("name", 'item' . $count);
+        $new_item->getElementsByTagName('*')->item(2)->setAttribute("value", $ingredient['item']);
+        $dom->getElementById('ingredients')->appendChild($new_item);
+      }
+      $count += 1;
+    }
+
+    $count = 1;
+    foreach ($result['steps'] as $step) {
+      if ($count == 1) {
+        $dom->getElementById('step1')->nodeValue = $step;
+      } else {
+        $new_item = $dom->getElementById('step1')->cloneNode();
+        $new_item->setAttribute("id", 'step' . $count);
+        $new_item->setAttribute("name", 'step' . $count);
+        $new_item->setAttribute("placeholder", 'Step ' . $count);
+        $new_item->nodeValue = $step;
+        $dom->getElementById('steps')->appendChild($new_item);
+      }
+      $count += 1;
+    }
+
+    $image_bin = base64_encode($result['image']->getData());
+    $dom->getElementById('image-preview')->setAttribute("src", "data:image/" . $result['image_type'] . ";base64, $image_bin ");
+
+    //$image = $result['image'];
+    //$image_type = $result['image_type'];
+
+    //$dom->getElementById('image').nodeValue = $image_bin;
+    //$dom->getElementById('image').nodeValue = $result['image']->getData();
+
+    echo $dom->saveHTML();
+  } else {
+    // Display blank add recipe page
+    require 'addrecipe.view.php';
+  }
+} else {
+  // Display blank add recipe page
+  require 'addrecipe.view.php';
+}
+
+
 
 echo <<<_END
 
@@ -93,11 +191,8 @@ echo <<<_END
 	// jQuery code on page load
 	$(function () {
 
-    // Clear all text input fields
-    $('#formInput').find("input[type=text], textarea, input[type='file']").val('');
-
     // Set focus to first text input
-    $('#recipe-name').focus();
+    $('#name').focus();
 
     $('#plus-ingredient').click(function(e){
         // Stop acting like a button
@@ -193,24 +288,8 @@ echo <<<_END
 	});
 
   function checkFormData() {
-    var result = false;
-    // Check if there is a recipe in DB with the same name
-    $.ajax({ url: 'recipeindb.php',
-         async: false,
-         data: {name: $('#recipe-name').val()},
-         type: 'post',
-         success: function(output) {
-            if (output == "False") {
-              result = true;
-            } else {
-              alert('Recipe with that name already exists. Please try something else.');
-              $('html,body').animate({scrollTop: 100}, 500);
-              $('#recipe-name').focus();
-              result = false;
-            }
-         }
-    });
-    return result;
+    // No additional checks required (yet)
+    return true;
   }
 
 	</script>
