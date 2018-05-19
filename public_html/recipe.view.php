@@ -14,11 +14,9 @@
 				<tr>
 					<td>Serves:</td>
 					<td>
-						<!--<input type="button" id="minus" value="-" class="plusminus" />-->
 						<button id="minus" class="plusminus"><i class="fas fa-minus"></i></button>
 						<span id='serves'>1</span>
 						<button id="plus" class="plusminus"><i class="fas fa-plus"></i></button>
-            <!--<input type="button" id="plus" value="+" class="plusminus" />-->
 					 </td>
 				</tr>
 				<tr>

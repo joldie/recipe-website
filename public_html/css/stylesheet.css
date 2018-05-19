@@ -2,8 +2,6 @@ html {
   background: #efefef;
   color: #444444;
   font-family: 'Cutive Mono', sans-serif;
-  /*font-display: swap; /* Shows fallback font immediately to user, while webfont
-  is being downloaded */
   line-height: 1.6;
   min-height: 100%;
   position: relative;
@@ -48,7 +46,6 @@ header {
   z-index: 1000;
   height: 70px;
   width: 100%;
-  /*background: #294766;*/
   background: #356629;
   color: #efefef;
   text-align: justify;
@@ -208,7 +205,7 @@ header h1::before {
 }
 
 .right-align {
-  /*text-align: right;*/
+  text-align: right;
 }
 
 .flex-container-centered {
@@ -237,7 +234,6 @@ header h1::before {
   border: 1px solid #cccccc;
   border-radius: 5px;
   display: inline-block;
-  /*margin-bottom: 3px;*/
   padding: 3px;
 }
 
@@ -270,11 +266,6 @@ footer {
   position: absolute;
   text-align: center;
   width: 100%;
-}
-
-.cc-image {
-  vertical-align: middle;
-  width: 20px;
 }
 
 /* For debugging only: */

@@ -74,8 +74,6 @@ if ($result !== null) {
     require 'recipe_not_found.view.php';
 }
 
-//echo "<script> $('#edit-button-link').attr('href', 'editrecipe.php?id=$id') </script>";
-
 echo <<<_END
 
 	<script>

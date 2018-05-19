@@ -101,13 +101,11 @@ try {
 }
 
 if ($mongodb_id !== null) {
-  //echo "Valid recipe ID...";
 
   $result = $collection->findOne([ '_id' => $mongodb_id]);
 
   // If recipe in DB, display current values in form
   if ($result !== null) {
-    //echo "Recipe in DB...";
     $dom = new DOMDocument();
     // HTML template for displaying recipe
     $template_html = file_get_contents("addrecipe.view.php");
@@ -164,13 +162,8 @@ if ($mongodb_id !== null) {
     $image_bin = base64_encode($result['image']->getData());
     $dom->getElementById('image-preview')->setAttribute("src", "data:image/" . $result['image_type'] . ";base64, $image_bin ");
 
-    //$image = $result['image'];
-    //$image_type = $result['image_type'];
-
-    //$dom->getElementById('image').nodeValue = $image_bin;
-    //$dom->getElementById('image').nodeValue = $result['image']->getData();
-
     echo $dom->saveHTML();
+
   } else {
     // Display blank add recipe page
     require 'addrecipe.view.php';
