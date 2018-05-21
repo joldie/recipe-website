@@ -6,7 +6,7 @@
 	<meta charset="utf-8">
 	<title>recipes:rebooted</title>
 	<meta name="description" content="Vegan food recipes, news and discussion.">
-	<meta name="author" content="John Oldridge">
+	<meta name="author" content="joldie">
 
 	<!-- Mobile specific data -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

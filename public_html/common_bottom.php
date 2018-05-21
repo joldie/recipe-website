@@ -1,7 +1,10 @@
 	<footer>
-		<a rel="license" href="http://creativecommons.org/licenses/by/4.0/" target="_blank"><i class="fab fa-creative-commons"></i> This work is licensed under a Creative Commons Attribution 4.0 International License</a>
+		<hr width="80%">
+		<i class="fas fa-code-branch"></i> Fork this website on <a href="https://github.com/joldie" target="_blank">GitHub</a>
 		<br />
-		<a href="https://github.com/joldie" target="_blank"><i class="fas fa-code-branch"></i> Fork the website on GitHub</a>
+		<i class="fab fa-creative-commons-pd"></i> All site content and underlying source code is dedicated to the pubic domain under a <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">Creative Commons Zero v1.0 Universal License</a>
+		<br />
+		<i class="fab fa-font-awesome"></i> All icons and placeholder images, unless other stated, courtesy of <a href="https://fontawesome.com/" target="_blank">Font Awesome</a>
 	</footer>
 
 </body>
