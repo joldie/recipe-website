@@ -29,7 +29,7 @@
 		<a href="index.php">
 		<div class="top-logo-name">
 			<h1><i class="fas fa-utensils"></i></h1>
-			<h1 class="header-title normal-text"> recipes:<b>rebooted</b></h1>
+			<h1 class="header-title normal-text">recipes:<b>rebooted</b></h1>
 		</div>
 		</a>
 

@@ -1,3 +1,5 @@
+/* Small/medium screens
+   - Nav links hidden in pop-up screen menu */
 @media screen and (max-width: 940px) {
   header nav ul {
     display: block;
@@ -23,6 +25,7 @@
     display: none;
   }
   .nav-container ul {
+    padding-left: 0;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -118,6 +121,9 @@
   transform: translateY(0);
 }
 
+/* Very small screens
+   - Title text hidden
+   - Recipe page layout single column */
 @media screen and (max-width: 450px) {
   .header-title {
     opacity: 0;
@@ -125,4 +131,17 @@
     on very small screen. */
     font-size: 10px;
   }
+
+  .recipe-content-grid {
+    display: block;
+  }
+
+  .recipe-content-image {
+    width: 100%;
+  }
+
+  .recipe-content-main {
+    width: 100%;
+  }
+
 }

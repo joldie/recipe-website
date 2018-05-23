@@ -4,6 +4,7 @@ html {
   font-family: 'Cutive Mono', sans-serif;
   line-height: 1.6;
   min-height: 100%;
+  min-width: 320px;
   position: relative;
   /* Makes text more crisp, clear on all browsers: */
   -moz-osx-font-smoothing: grayscale;
@@ -33,6 +34,10 @@ body {
 
 .normal-text {
   font-weight: normal;
+}
+
+.header-title {
+  margin-left: 10px;
 }
 
 .header-title-bold {
@@ -125,11 +130,8 @@ header h1::before {
   padding: 12px 20px 12px 40px;
   transition: width 0.4s ease-in-out;
   -webkit-transition: width 0.4s ease-in-out;
-  width: 350px;
-}
-
-.searchbox:focus {
   width: 90%;
+  max-width: 400px;
 }
 
 .grid-container {
@@ -173,7 +175,7 @@ header h1::before {
 .recipe-content-grid {
   display: grid;
   grid-gap: 25px;
-  grid-template-columns: repeat(auto-fill, minmax(400px, auto));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   justify-content: center;
   margin-left: 5%;
   margin-right: 5%;
@@ -182,11 +184,15 @@ header h1::before {
 }
 
 .recipe-content-image {
-  width: 100%;
+  position: relative;
 }
 
 #recipe-image {
-  width: inherit;
+  width: 100%;
+}
+
+.recipe-content-main {
+  position: relative;
 }
 
 .plusminus {
@@ -254,9 +260,13 @@ header h1::before {
 }
 
 .img-preview {
-  margin-left: 25%;
-  margin-right: 25%;
-  width: 50%;
+  /* Center image horizontally */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* Size image to fit screen, but limit max width */
+  width: 90%;
+  max-width: 400px;
 }
 
 .submit-buttons-div {
