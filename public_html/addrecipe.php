@@ -1,18 +1,9 @@
 <?php
 
-// Connect to MongoDB database
-require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../resources/config.php';
-$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
+require_once '../config.php';
 
-// Test if connection was successful
-try {
-    $dbs = $client->listDatabases();
-} catch (MongoDB\Driver\Exception\ConnectionTimeoutException $e) {
-    echo "Unable to connect to MongoDB. Please check connection settings.";
-}
-
-$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
+// Connect to database
+require  LIBRARY_PATH . 'connectdb.php';
 
 if (isset($_POST['discard'])) {
   // Redirect back to home page
@@ -81,8 +72,9 @@ if (isset($_POST['discard'])) {
 
 }
 
-require 'common_top.php';
-require 'addrecipe.view.php';
+require TEMPLATES_PATH . 'header.php';
+require TEMPLATES_PATH . 'addrecipe.view.php';
+require TEMPLATES_PATH . 'footer.php';
 
 echo <<<_END
 
@@ -217,5 +209,3 @@ echo <<<_END
 
 _END
 ;
-
-require 'common_bottom.php';

@@ -1,4 +1,9 @@
-<?php include 'common_top.php';?>
+<?php
+
+require_once '../config.php';
+require TEMPLATES_PATH . 'header.php';
+
+?>
 
 <main>
 	<div class="content-header no-shadow-no-border">
@@ -13,7 +18,10 @@
 			<br />
 			Feel free to copy, improve and share all the recipes on this site.
 	</div>
-
 </main>
 
-<?php include 'common_bottom.php';?>
+<?php
+
+require TEMPLATES_PATH . 'footer.php';
+
+?>

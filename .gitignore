@@ -1,4 +1,4 @@
-resources/config.php
+config.php
 public_html/composer.phar
 public_html/composer.lock
 public_html/vendor/

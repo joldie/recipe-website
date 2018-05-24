@@ -1,22 +1,12 @@
 <?php
 
-require 'common_top.php';
-require 'index_top.view.php';
+require_once '../config.php';
 
+require TEMPLATES_PATH . 'header.php';
+require TEMPLATES_PATH . 'index_top.view.php';
 
-// Connect to MongoDB database
-require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../resources/config.php';
-$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
-
-// Test if connection was successful
-try {
-    $dbs = $client->listDatabases();
-} catch (MongoDB\Driver\Exception\ConnectionTimeoutException $e) {
-    echo "Unable to connect to MongoDB. Please check connection string.";
-}
-
-$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
+// Connect to database
+require  LIBRARY_PATH . 'connectdb.php';
 
 if (isset($_POST['search'])) {
   // Extract all words from search text (ignoring punctuation, special chars)
@@ -38,12 +28,12 @@ foreach ($recipes as $recipe) {
   $recipe_name = $recipe['name'];
   $image_bin = base64_encode($recipe['image']->getData());
   $image_url = "data:image/" . $recipe['image_type'] . ";base64," . $image_bin;
-  require 'card.view.php';
+  require TEMPLATES_PATH . 'card.view.php';
 }
 
 if ($count_recipes == 0) {
   echo "<h4>No recipes found<br /><br /> Try again or <a href='index.php' style='text-decoration:underline'>return home</a></h4>";
 }
 
-require 'index_bottom.view.php';
-require 'common_bottom.php';
+require TEMPLATES_PATH . 'index_bottom.view.php';
+require TEMPLATES_PATH . 'footer.php';

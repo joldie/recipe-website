@@ -1,20 +1,11 @@
 <?php
 
-require 'common_top.php';
+require_once '../config.php';
 
-// Connect to MongoDB database
-require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../resources/config.php';
-$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
+require TEMPLATES_PATH . 'header.php';
 
-// Test if connection was successful
-try {
-    $dbs = $client->listDatabases();
-} catch (MongoDB\Driver\Exception\ConnectionTimeoutException $e) {
-    echo "Unable to connect to MongoDB. Please check connection settings.";
-}
-
-$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
+// Connect to database
+require  LIBRARY_PATH . 'connectdb.php';
 
 if (isset($_POST['discard'])) {
   // Redirect back to recipe page
@@ -108,7 +99,7 @@ if ($mongodb_id !== null) {
   if ($result !== null) {
     $dom = new DOMDocument();
     // HTML template for displaying recipe
-    $template_html = file_get_contents("addrecipe.view.php");
+    $template_html = file_get_contents(TEMPLATES_PATH . 'addrecipe.view.php');
     // Options prevent addition of doctype, <html> and <body> tags
     $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
@@ -166,12 +157,14 @@ if ($mongodb_id !== null) {
 
   } else {
     // Display blank add recipe page
-    require 'addrecipe.view.php';
+    require TEMPLATES_PATH . 'addrecipe.view.php';
   }
 } else {
   // Display blank add recipe page
-  require 'addrecipe.view.php';
+  require TEMPLATES_PATH . 'addrecipe.view.php';
 }
+
+require TEMPLATES_PATH . 'footer.php';
 
 echo <<<_END
 
@@ -287,5 +280,3 @@ echo <<<_END
 
 _END
 ;
-
-require 'common_bottom.php';

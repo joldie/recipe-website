@@ -1,18 +1,11 @@
 <?php
 
-require 'common_top.php';
+require_once '../config.php';
 
-// Connect to MongoDB database
-require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../resources/config.php';
-$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
+require TEMPLATES_PATH . 'header.php';
 
-// Test if connection was successful
-try {
-    $dbs = $client->listDatabases();
-} catch (MongoDB\Driver\Exception\ConnectionTimeoutException $e) {
-    echo "Unable to connect to MongoDB. Please check connection string.";
-}
+// Connect to database
+require  LIBRARY_PATH . 'connectdb.php';
 
 // Get recipe ID from URL, sanitise input and create MongoDB ID object
 $id = htmlspecialchars($_GET['id']);
@@ -24,14 +17,13 @@ try {
 }
 
 // Check if recipe already in DB
-$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
 $result = $collection->findOne([ '_id' => $mongodb_id]);
 
 // Only update HTML if recipe in DB, otherwise display default page
 if ($result !== null) {
     $dom = new DOMDocument();
     // HTML template for displaying recipe
-    $template_html = file_get_contents("recipe.view.php");
+    $template_html = file_get_contents(TEMPLATES_PATH . 'recipe.view.php');
     // Options prevent addition of doctype, <html> and <body> tags
     $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
@@ -71,8 +63,10 @@ if ($result !== null) {
     echo $dom->saveHTML();
 } else {
     // Display "recipe not found" page
-    require 'recipe_not_found.view.php';
+    require TEMPLATES_PATH . 'recipenotfound.view.php';
 }
+
+require TEMPLATES_PATH . 'footer.php';
 
 echo <<<_END
 
@@ -162,5 +156,3 @@ echo <<<_END
 
 _END
 ;
-
-require 'common_bottom.php';
