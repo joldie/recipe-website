@@ -1,7 +1,7 @@
 <main>
 	<div class='recipe-content-grid'>
 		<div class="recipe-content-image">
-			<img id='recipe-image' alt='Recipe image' src='images/cutlery.png' />
+			<img id='recipe-image' alt='Recipe image' src='' />
 		</div>
 
 		<div class='recipe-content-main'>

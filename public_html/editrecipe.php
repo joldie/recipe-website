@@ -2,10 +2,8 @@
 
 require_once '../config.php';
 
-require TEMPLATES_PATH . 'header.php';
-
 // Connect to database
-require  LIBRARY_PATH . 'connectdb.php';
+require  LIBRARY_PATH . '/connectdb.php';
 
 if (isset($_POST['discard'])) {
   // Redirect back to recipe page
@@ -82,6 +80,8 @@ if (isset($_POST['discard'])) {
 
 }
 
+require TEMPLATES_PATH . '/header.view.php';
+
 // Get recipe ID from URL (if available), sanitise input and create MongoDB ID object
 $id = htmlspecialchars($_GET['id']);
 try {
@@ -99,7 +99,7 @@ if ($mongodb_id !== null) {
   if ($result !== null) {
     $dom = new DOMDocument();
     // HTML template for displaying recipe
-    $template_html = file_get_contents(TEMPLATES_PATH . 'addrecipe.view.php');
+    $template_html = file_get_contents(TEMPLATES_PATH . '/editrecipe.view.php');
     // Options prevent addition of doctype, <html> and <body> tags
     $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
@@ -157,14 +157,18 @@ if ($mongodb_id !== null) {
 
   } else {
     // Display blank add recipe page
-    require TEMPLATES_PATH . 'addrecipe.view.php';
+    require TEMPLATES_PATH . '/editrecipe.view.php';
   }
 } else {
   // Display blank add recipe page
-  require TEMPLATES_PATH . 'addrecipe.view.php';
+  require TEMPLATES_PATH . '/editrecipe.view.php';
 }
 
-require TEMPLATES_PATH . 'footer.php';
+require TEMPLATES_PATH . '/footer.view.php';
+
+// Extract relative directory path and store in local variable for insertion
+// into heredoc-delimited echo statement
+$images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
 
 echo <<<_END
 
@@ -262,7 +266,7 @@ echo <<<_END
         if (selectedFiles[0].size > 2000000) {
           alert("Image file size exceeds 2MB. Please select another image.");
           imgInput.value = '';
-          $('.img-preview').attr('src', 'images/image.png');
+          $('.img-preview').attr('src', '{$images_path_relative}/image.png');
         } else {
           $('.img-preview').attr('src', window.URL.createObjectURL(selectedFiles[0]));
         }

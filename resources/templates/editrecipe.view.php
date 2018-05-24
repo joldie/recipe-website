@@ -1,7 +1,7 @@
 <main>
 	<div class="flex-container-centered">
 		<div class="add-recipe-container">
-			<form id="formInput" method="post" action="" enctype="multipart/form-data" onsubmit="<?php echo $on_submit_action; ?>">
+			<form id="formInput" method="post" action="" enctype="multipart/form-data" onsubmit="return checkFormData();">
 				<h1 id="main-header">Add Recipe</h1>
 				<h3>Recipe name:</h3>
 				<input type="text" class="full-width" id="recipe-name" name="name" maxlength="100" placeholder="Recipe name" required />
@@ -11,7 +11,7 @@
 				<p>(max file size: 2 MB)</p>
 				<input name="image" id="image" type="file" class="img-upload" accept=".jpg, .jpeg, .png">
 				<div class="img-preview-div">
-					<img class="img-preview" id="image-preview" src="<?php echo $images_path_relative; ?>/image.png" />
+					<img class="img-preview" id="image-preview" src="images/image.png" />
 				</div>
 				<h3>Serves:</h3>
 				<input type="number" class="small-input" id="serves" name="serves" value="1" min="1" max="12" required />

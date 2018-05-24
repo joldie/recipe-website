@@ -2,10 +2,10 @@
 
 require_once '../config.php';
 
-require TEMPLATES_PATH . 'header.php';
+require TEMPLATES_PATH . '/header.view.php';
 
 // Connect to database
-require  LIBRARY_PATH . 'connectdb.php';
+require  LIBRARY_PATH . '/connectdb.php';
 
 // Get recipe ID from URL, sanitise input and create MongoDB ID object
 $id = htmlspecialchars($_GET['id']);
@@ -23,7 +23,7 @@ $result = $collection->findOne([ '_id' => $mongodb_id]);
 if ($result !== null) {
     $dom = new DOMDocument();
     // HTML template for displaying recipe
-    $template_html = file_get_contents(TEMPLATES_PATH . 'recipe.view.php');
+    $template_html = file_get_contents(TEMPLATES_PATH . '/recipe.view.php');
     // Options prevent addition of doctype, <html> and <body> tags
     $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
@@ -63,10 +63,10 @@ if ($result !== null) {
     echo $dom->saveHTML();
 } else {
     // Display "recipe not found" page
-    require TEMPLATES_PATH . 'recipenotfound.view.php';
+    require TEMPLATES_PATH . '/recipenotfound.view.php';
 }
 
-require TEMPLATES_PATH . 'footer.php';
+require TEMPLATES_PATH . '/footer.view.php';
 
 echo <<<_END
 

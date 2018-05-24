@@ -3,7 +3,7 @@
 require_once '../config.php';
 
 // Connect to database
-require  LIBRARY_PATH . 'connectdb.php';
+require  LIBRARY_PATH . '/connectdb.php';
 
 if (isset($_POST['discard'])) {
   // Redirect back to home page
@@ -43,7 +43,7 @@ if (isset($_POST['discard'])) {
   }
   else {
     // Upload dummy image
-    $image = new MongoDB\BSON\Binary(file_get_contents(IMAGES_PATH . "image.png"), MongoDB\BSON\Binary::TYPE_GENERIC);
+    $image = new MongoDB\BSON\Binary(file_get_contents(IMAGES_PATH . "/image.png"), MongoDB\BSON\Binary::TYPE_GENERIC);
     $image_type = 'png';
   }
 
@@ -72,9 +72,14 @@ if (isset($_POST['discard'])) {
 
 }
 
-require TEMPLATES_PATH . 'header.php';
-require TEMPLATES_PATH . 'addrecipe.view.php';
-require TEMPLATES_PATH . 'footer.php';
+// Variable(s) to be inserted into HTML
+$on_submit_action = "return checkFormData();";
+$images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
+
+// Load HTML templates
+require TEMPLATES_PATH . '/header.view.php';
+require TEMPLATES_PATH . '/addrecipe.view.php';
+require TEMPLATES_PATH . '/footer.view.php';
 
 echo <<<_END
 
@@ -175,7 +180,7 @@ echo <<<_END
         if (selectedFiles[0].size > 2000000) {
           alert("Image file size exceeds 2MB. Please select another image.");
           imgInput.value = '';
-          $('.img-preview').attr('src', 'images/image.png');
+          $('.img-preview').attr('src', '{$images_path_relative}/image.png');
         } else {
           $('.img-preview').attr('src', window.URL.createObjectURL(selectedFiles[0]));
         }
