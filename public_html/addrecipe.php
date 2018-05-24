@@ -2,8 +2,8 @@
 
 // Connect to MongoDB database
 require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../db_login.php';
-$client = new MongoDB\Client("mongodb://{$db_server}:{$db_port}");
+require_once '../resources/config.php';
+$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
 
 // Test if connection was successful
 try {
@@ -12,7 +12,7 @@ try {
     echo "Unable to connect to MongoDB. Please check connection settings.";
 }
 
-$collection = $client->$db_name->$db_collection;
+$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
 
 if (isset($_POST['discard'])) {
   // Redirect back to home page
@@ -52,7 +52,7 @@ if (isset($_POST['discard'])) {
   }
   else {
     // Upload dummy image
-    $image = new MongoDB\BSON\Binary(file_get_contents("images/image.png"), MongoDB\BSON\Binary::TYPE_GENERIC);
+    $image = new MongoDB\BSON\Binary(file_get_contents(IMAGES_PATH . "image.png"), MongoDB\BSON\Binary::TYPE_GENERIC);
     $image_type = 'png';
   }
 

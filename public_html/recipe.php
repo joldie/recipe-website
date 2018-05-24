@@ -4,8 +4,8 @@ require 'common_top.php';
 
 // Connect to MongoDB database
 require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../db_login.php';
-$client = new MongoDB\Client("mongodb://{$db_server}:{$db_port}");
+require_once '../resources/config.php';
+$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
 
 // Test if connection was successful
 try {
@@ -24,7 +24,7 @@ try {
 }
 
 // Check if recipe already in DB
-$collection = $client->$db_name->$db_collection;
+$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
 $result = $collection->findOne([ '_id' => $mongodb_id]);
 
 // Only update HTML if recipe in DB, otherwise display default page

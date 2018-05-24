@@ -4,8 +4,8 @@ require 'common_top.php';
 
 // Connect to MongoDB database
 require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../db_login.php';
-$client = new MongoDB\Client("mongodb://{$db_server}:{$db_port}");
+require_once '../resources/config.php';
+$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
 
 // Test if connection was successful
 try {
@@ -14,7 +14,7 @@ try {
     echo "Unable to connect to MongoDB. Please check connection settings.";
 }
 
-$collection = $client->$db_name->$db_collection;
+$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
 
 if (isset($_POST['discard'])) {
   // Redirect back to recipe page
@@ -172,8 +172,6 @@ if ($mongodb_id !== null) {
   // Display blank add recipe page
   require 'addrecipe.view.php';
 }
-
-
 
 echo <<<_END
 

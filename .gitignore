@@ -1,5 +1,4 @@
-db_login.php
+resources/config.php
 public_html/composer.phar
 public_html/composer.lock
 public_html/vendor/
-

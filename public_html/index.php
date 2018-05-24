@@ -6,8 +6,8 @@ require 'index_top.view.php';
 
 // Connect to MongoDB database
 require 'vendor/autoload.php'; // Include Composer's autoloader
-require_once '../db_login.php';
-$client = new MongoDB\Client("mongodb://{$db_server}:{$db_port}");
+require_once '../resources/config.php';
+$client = new MongoDB\Client("mongodb://{$config['db']['server']}:{$config['db']['port']}");
 
 // Test if connection was successful
 try {
@@ -16,17 +16,18 @@ try {
     echo "Unable to connect to MongoDB. Please check connection string.";
 }
 
+$collection = $client->{$config['db']['name']}->{$config['db']['collection']};
+
 if (isset($_POST['search'])) {
   // Extract all words from search text (ignoring punctuation, special chars)
   $delimiters = array("\n", "\t", ",", ".", "!", "?", ":", ";", "'", '"');
   $search_string = str_replace($delimiters, " ", $_POST['search']);
 
   // Search DB collection for recipes based on keywords (limit to 12 results)
-  $recipes = $client->$db_name->$db_collection->find(['$text'=> ['$search'=>$search_string]], ['limit' => 12]);
+  $recipes = $collection->find(['$text'=> ['$search'=>$search_string]], ['limit' => 12]);
 } else {
   // Retrieve maximum 12 receipes from DB
-  $recipes = $client->$db_name->$db_collection->find([], ['limit' => 12]);
-
+  $recipes = $collection->find([], ['limit' => 12]);
 }
 
 // For each recipe, display a "card" div with recipe name and image
