@@ -1,6 +1,6 @@
-<a class="card-link" href="recipe.php?id=<?= $recipe_id; ?>">
+<a class="card-link" id="card-link" href="">
 	<div class="card">
-		<div class="card-image" style="background-image: url(<?= $image_url; ?>)"></div>
-		<div class="card-title"><?= $recipe_name; ?></div>
+		<div class="card-image" id="card-image" style=""></div>
+		<div class="card-title" id="card-title"></div>
 	</div>
 </a>

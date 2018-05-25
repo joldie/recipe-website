@@ -210,6 +210,10 @@ header h1::before {
   margin-top: 20px;
 }
 
+.normal-margins {
+  margin: 20px;
+}
+
 .center-align {
   text-align: center;
 }

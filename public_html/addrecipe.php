@@ -2,6 +2,12 @@
 
 require_once '../config.php';
 
+/*
+|--------------------------------------------------------------------------
+| HTML form logic
+|--------------------------------------------------------------------------
+*/
+
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
 
@@ -72,14 +78,38 @@ if (isset($_POST['discard'])) {
 
 }
 
-// Variable(s) to be inserted into HTML
-$on_submit_action = "return checkFormData();";
-$images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
+/*
+|--------------------------------------------------------------------------
+| Populate variables for HTML display
+|--------------------------------------------------------------------------
+*/
 
-// Load HTML templates
+require_once LIBRARY_PATH . "/editRecipeFunctions.php";
+
+$images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
+$image_src = $images_path_relative . "/image.png";
+$serves = "1";
+$preptime = "10";
+$cooktime = "10";
+$ingredients_html = generate_ingredients_html(null);
+$steps_html = generate_steps_html(null);
+$on_submit_action = "return checkFormData();";
+
+/*
+|--------------------------------------------------------------------------
+| Load HTML views
+|--------------------------------------------------------------------------
+*/
+
 require TEMPLATES_PATH . '/header.view.php';
-require TEMPLATES_PATH . '/addrecipe.view.php';
+require TEMPLATES_PATH . '/editrecipe.view.php';
 require TEMPLATES_PATH . '/footer.view.php';
+
+/*
+|--------------------------------------------------------------------------
+| JS scripts
+|--------------------------------------------------------------------------
+*/
 
 echo <<<_END
 

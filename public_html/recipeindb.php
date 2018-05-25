@@ -1,7 +1,7 @@
 <?php
 
 require_once '../config.php';
-require  LIBRARY_PATH . '/connectdb.php';
+require_once  LIBRARY_PATH . '/connectdb.php';
 
 if (isset($_POST['name'])) {
 

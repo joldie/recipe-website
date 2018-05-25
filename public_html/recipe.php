@@ -2,7 +2,11 @@
 
 require_once '../config.php';
 
-require TEMPLATES_PATH . '/header.view.php';
+/*
+|--------------------------------------------------------------------------
+| Populate variables for HTML display
+|--------------------------------------------------------------------------
+*/
 
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
@@ -19,54 +23,59 @@ try {
 // Check if recipe already in DB
 $result = $collection->findOne([ '_id' => $mongodb_id]);
 
-// Only update HTML if recipe in DB, otherwise display default page
 if ($result !== null) {
-    $dom = new DOMDocument();
-    // HTML template for displaying recipe
-    $template_html = file_get_contents(TEMPLATES_PATH . '/recipe.view.php');
-    // Options prevent addition of doctype, <html> and <body> tags
-    $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+  $recipe_exists = true;
 
-    $dom->getElementById('recipe-name')->nodeValue = $result['name'];
-    $dom->getElementById('recipe-description')->nodeValue = $result['description'];
-    $dom->getElementById('serves')->nodeValue = $result['serves'];
-    $original_num_serves = $result['serves'];
-    $dom->getElementById('preptime')->nodeValue = $result['preptime'];
-    $dom->getElementById('cooktime')->nodeValue = $result['cooktime'];
-    // Only display credit text/link if value found in DB
-    if ($result['credit'] == null) {
-      $dom->getElementById('credit_row')->nodeValue = '';
-    } elseif ($result['credit_link'] == null) {
-      $dom->getElementById('credit_text')->nodeValue = $result['credit'];
-    } else {
-      $dom->getElementById('credit_text')->nodeValue = '';
-      $new_item = $dom->createElement('a', $result['credit']);
-      $new_item->setAttribute("href",$result['credit_link']);
-      $dom->getElementById('credit_text')->appendChild($new_item);
-    }
+  $image_bin = base64_encode($result['image']->getData());
+  $recipe_src = "data:image/" . $result['image_type'] . ";base64, $image_bin ";
 
-    foreach ($result['ingredients'] as $ingredient) {
-        $new_item = $dom->createElement('li', $ingredient['qty'] . ' ' .
-            $ingredient['unit'] . ' ' . $ingredient['item']);
-        $dom->getElementById('ingredients-list')->appendChild($new_item);
-    }
+  $recipe_name = $result['name'];
 
-    foreach ($result['steps'] as $step) {
-        $new_item = $dom->createElement('li', $step);
-        $dom->getElementById('steps-list')->appendChild($new_item);
-    }
+  $recipe_description = $result['description'];
+  if ($recipe_description == "") { $recipe_description = "No description."; }
 
-    $image_bin = base64_encode($result['image']->getData());
-    $dom->getElementById('recipe-image')->setAttribute("src", "data:image/" . $result['image_type'] . ";base64, $image_bin ");
+  $serves = $result['serves'];
+  $original_num_serves = $result['serves'];
+  $preptime = $result['preptime'];
+  $cooktime = $result['cooktime'];
 
+  if ($result['credit'] == null) {
+    $credit_text = '-';
+  } elseif ($result['credit_link'] == null) {
+    $credit_text = $result['credit'];
+  } else {
+    $credit_text = "<a href='{$result['credit_link']}'>{$result['credit']}</a>";
+  }
 
-    echo $dom->saveHTML();
+  $ingredients = "";
+  foreach ($result['ingredients'] as $ingredient) {
+      $ingredients = $ingredients . "<li>{$ingredient['qty']} {$ingredient['unit']} {$ingredient['item']}</li>";
+  }
+
+  $steps = "";
+  foreach ($result['steps'] as $step) {
+      $steps = $steps . "<li>$step</li>";
+  }
 } else {
-    // Display "recipe not found" page
-    require TEMPLATES_PATH . '/recipenotfound.view.php';
+  $recipe_exists = false;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Load HTML views
+|--------------------------------------------------------------------------
+*/
+
+require TEMPLATES_PATH . '/header.view.php';
+if ($recipe_exists) { require TEMPLATES_PATH . '/recipe.view.php'; }
+else { require TEMPLATES_PATH . '/recipenotfound.view.php'; }
 require TEMPLATES_PATH . '/footer.view.php';
+
+/*
+|--------------------------------------------------------------------------
+| JS scripts
+|--------------------------------------------------------------------------
+*/
 
 echo <<<_END
 

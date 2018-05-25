@@ -2,6 +2,12 @@
 
 require_once '../config.php';
 
+/*
+|--------------------------------------------------------------------------
+| HTML form logic
+|--------------------------------------------------------------------------
+*/
+
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
 
@@ -80,95 +86,52 @@ if (isset($_POST['discard'])) {
 
 }
 
-require TEMPLATES_PATH . '/header.view.php';
+/*
+|--------------------------------------------------------------------------
+| Populate variables for HTML display
+|--------------------------------------------------------------------------
+*/
 
-// Get recipe ID from URL (if available), sanitise input and create MongoDB ID object
-$id = htmlspecialchars($_GET['id']);
-try {
-    // Exception will be thrown if ID in URL not in expected format
-    $mongodb_id = new \MongoDB\BSON\ObjectId($id);
-} catch (Exception $e) {
-    // Continue execution, regardless
-}
+require_once LIBRARY_PATH . "/editRecipeFunctions.php";
 
-if ($mongodb_id !== null) {
+$main_header = "Edit Recipe";
+$images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
 
-  $result = $collection->findOne([ '_id' => $mongodb_id]);
-
-  // If recipe in DB, display current values in form
-  if ($result !== null) {
-    $dom = new DOMDocument();
-    // HTML template for displaying recipe
-    $template_html = file_get_contents(TEMPLATES_PATH . '/editrecipe.view.php');
-    // Options prevent addition of doctype, <html> and <body> tags
-    $dom->loadHTML($template_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-
-    $dom->getElementById('main-header')->nodeValue = "Edit Recipe";
-    $dom->getElementById('recipe-name')->setAttribute("value", $result['name']);
-    $dom->getElementById('recipe-description')->nodeValue = $result['description'];
-    $dom->getElementById('serves')->setAttribute("value", $result['serves']);
-    $dom->getElementById('preptime')->setAttribute("value", $result['preptime']);
-    $dom->getElementById('cooktime')->setAttribute("value", $result['cooktime']);
-    $dom->getElementById('credit')->setAttribute("value", $result['credit']);
-    $dom->getElementById('credit_link')->setAttribute("value", $result['credit_link']);
-
-    $count = 1;
-    foreach ($result['ingredients'] as $ingredient) {
-      if ($count == 1) {
-        $dom->getElementById('qty1')->setAttribute("value", $ingredient['qty']);
-        $dom->getElementById('unit1')->setAttribute("value", $ingredient['unit']);
-        $dom->getElementById('item1')->setAttribute("value", $ingredient['item']);
-      } else {
-        $new_item = $dom->getElementById('ingredient1')->cloneNode(true);
-        $new_item->setAttribute("id", 'ingredient' . $count);
-        $new_item->getElementsByTagName('*')->item(0)->setAttribute("id", 'qty' . $count);
-        $new_item->getElementsByTagName('*')->item(0)->setAttribute("name", 'qty' . $count);
-        $new_item->getElementsByTagName('*')->item(0)->setAttribute("value", $ingredient['qty']);
-        $new_item->getElementsByTagName('*')->item(1)->setAttribute("id", 'unit' . $count);
-        $new_item->getElementsByTagName('*')->item(1)->setAttribute("name", 'unit' . $count);
-        $new_item->getElementsByTagName('*')->item(1)->setAttribute("value", $ingredient['unit']);
-        $new_item->getElementsByTagName('*')->item(2)->setAttribute("id", 'item' . $count);
-        $new_item->getElementsByTagName('*')->item(2)->setAttribute("name", 'item' . $count);
-        $new_item->getElementsByTagName('*')->item(2)->setAttribute("value", $ingredient['item']);
-        $dom->getElementById('ingredients')->appendChild($new_item);
-      }
-      $count += 1;
-    }
-
-    $count = 1;
-    foreach ($result['steps'] as $step) {
-      if ($count == 1) {
-        $dom->getElementById('step1')->nodeValue = $step;
-      } else {
-        $new_item = $dom->getElementById('step1')->cloneNode();
-        $new_item->setAttribute("id", 'step' . $count);
-        $new_item->setAttribute("name", 'step' . $count);
-        $new_item->setAttribute("placeholder", 'Step ' . $count);
-        $new_item->nodeValue = $step;
-        $dom->getElementById('steps')->appendChild($new_item);
-      }
-      $count += 1;
-    }
-
-    $image_bin = base64_encode($result['image']->getData());
-    $dom->getElementById('image-preview')->setAttribute("src", "data:image/" . $result['image_type'] . ";base64, $image_bin ");
-
-    echo $dom->saveHTML();
-
-  } else {
-    // Display blank add recipe page
-    require TEMPLATES_PATH . '/editrecipe.view.php';
-  }
+// If recipe in DB, display current values in form
+$result = get_recipe_by_id(htmlspecialchars($_GET['id']), $collection);
+if ($result !== null) {
+  $recipe_exists = true;
+  $recipe_name = $result['name'];
+  $recipe_description = $result['description'];
+  $image_bin = base64_encode($result['image']->getData());
+  $image_src = "data:image/" . $result['image_type'] . ";base64, $image_bin ";
+  $serves = $result['serves'];
+  $preptime = $result['preptime'];
+  $cooktime = $result['cooktime'];
+  $ingredients_html = generate_ingredients_html($result);
+  $steps_html = generate_steps_html($result);
+  $credit = $result['credit'];
+  $credit_link = $result['credit_link'];
 } else {
-  // Display blank add recipe page
-  require TEMPLATES_PATH . '/editrecipe.view.php';
+  $recipe_exists = false;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Load HTML views
+|--------------------------------------------------------------------------
+*/
+
+require TEMPLATES_PATH . '/header.view.php';
+if ($recipe_exists) { require TEMPLATES_PATH . '/editrecipe.view.php'; }
+else { require TEMPLATES_PATH . '/recipenotfound.view.php'; }
 require TEMPLATES_PATH . '/footer.view.php';
 
-// Extract relative directory path and store in local variable for insertion
-// into heredoc-delimited echo statement
-$images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
+/*
+|--------------------------------------------------------------------------
+| JS scripts
+|--------------------------------------------------------------------------
+*/
 
 echo <<<_END
 
