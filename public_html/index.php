@@ -57,9 +57,10 @@ echo <<<_END
   // Checks if search string includes any alphabetic characters (including
   // accents, unlauts, etc) before posting
   function checkFormData() {
-    validSearchString = /[A-Za-z\u00C0-\u017F]/.test($('#searchInput').val());
+    validSearchString = /[A-Za-z\u00C0-\u017F]/.test(
+        document.getElementById('searchInput').value);
     if (!validSearchString) {
-      $('#searchInput').val("");
+      document.getElementById('searchInput').value = "";
     }
     return validSearchString;
   }
