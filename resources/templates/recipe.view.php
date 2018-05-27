@@ -48,5 +48,6 @@
 				<a id="edit-button-link" href="index.php">
 					<button name="edit"><i class="fas fa-edit"></i> Edit</button>
 				</a>
+				<button onclick="confirmDelete();"><i class="fas fa-trash"></i> Delete</button>
 			</div>
 </main>
