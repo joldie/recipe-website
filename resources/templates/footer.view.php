@@ -6,7 +6,3 @@
 		<br />
 		<i class="fab fa-font-awesome"></i> All icons and placeholder images, unless other stated, courtesy of <a href="https://fontawesome.com/" target="_blank">Font Awesome</a>
 	</footer>
-
-</body>
-
-</html>
