@@ -5,8 +5,8 @@
 		</div>
 
 		<div class='recipe-content-main'>
-			<h1 id='recipe-name'><?php echo $recipe_name; ?></h1>
-			<p id='recipe-description'>
+			<h1><?php echo $recipe_name; ?></h1>
+			<p>
 				<?php echo $recipe_description; ?>
 			</p>
 
@@ -21,15 +21,15 @@
 				</tr>
 				<tr>
 					<td>Prep. time:</td>
-					<td><span id='preptime'><?php echo $preptime; ?></span> min</td>
+					<td><span><?php echo $preptime; ?></span> min</td>
 				</tr>
 				<tr>
 					<td>Cooking time:</td>
-					<td><span id='cooktime'><?php echo $cooktime; ?></span> min</td>
+					<td><span><?php echo $cooktime; ?></span> min</td>
 				</tr>
-				<tr id="credit_row">
+				<tr>
 					<td>Credit:</td>
-					<td id="credit_text"><?php echo $credit_text; ?></td>
+					<td><?php echo $credit_text; ?></td>
 				</tr>
 			</table>
 </div>
@@ -40,13 +40,13 @@
 			<?php echo $ingredients; ?>
 		</ul>
 				<h3>Method:</h3>
-				<ol id='steps-list'>
+				<ol>
 					<?php echo $steps; ?>
 				</ol>
 			</div>
 			<div class="recipe-content-lists right-align">
 				<a id="edit-button-link" href="index.php">
-					<button name="edit" id="edit-button"><i class="fas fa-edit"></i> Edit</button>
+					<button name="edit"><i class="fas fa-edit"></i> Edit</button>
 				</a>
 			</div>
 </main>
