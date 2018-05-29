@@ -11,11 +11,7 @@ require_once '../config.php';
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
 
-if (isset($_POST['discard'])) {
-  // Redirect back to home page
-  echo "<script> window.location.replace('index.php') </script>";
-  die();
-} elseif (isset($_POST['name'])) {
+if (isset($_POST['name'])) {
   // If user inputted data, check and insert into database
   $name = $_POST['name'];
   $date = date("Y-m-d H:i:s", time());
@@ -86,6 +82,9 @@ if (isset($_POST['discard'])) {
 
 require_once LIBRARY_PATH . "/editRecipeFunctions.php";
 
+$main_header = "Add Recipe";
+$recipe_name = "";
+$recipe_description = "";
 $images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
 $image_src = $images_path_relative . "/image.png";
 $serves = "1";
@@ -93,7 +92,6 @@ $preptime = "10";
 $cooktime = "10";
 $ingredients_html = generate_ingredients_html(null);
 $steps_html = generate_steps_html(null);
-$on_submit_action = "return checkFormData();";
 
 /*
 |--------------------------------------------------------------------------

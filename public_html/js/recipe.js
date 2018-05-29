@@ -8,19 +8,22 @@ function getOriginalNumberServes(){
 }
 
 function getOriginalIngredientQtys(){
-  var listItems = $("#ingredients-list li");
-  listItems.each(function(idx, li) {
-    originalIngredientQtys.push($(li).text().substring(0,$(li).text().indexOf(' ')));
+  var listItems = document.querySelectorAll("#ingredients-list li");
+  listItems.forEach(function(li, index) {
+    originalIngredientQtys.push(
+      li.innerHTML.substring(0,li.innerHTML.indexOf(' ')));
   });
 }
 
 function updateIngredientQtys(original_num_serves, new_num_serves){
-  var listItems = $("#ingredients-list li");
-  listItems.each(function(idx, li) {
-    var oldVal = $(li).text().substring(0,$(li).text().indexOf(' '));
-    var newVal = originalIngredientQtys[idx] * new_num_serves / original_num_serves;
+  var listItems = document.querySelectorAll("#ingredients-list li");
+  listItems.forEach(function(li, index) {
+    var oldVal = li.innerHTML.substring(0,li.innerHTML.indexOf(' '));
+    var newVal = originalIngredientQtys[index] *
+      new_num_serves / original_num_serves;
     newVal = Number(newVal.toPrecision(3)).toString();
-    $(li).text(newVal + $(li).text().substring($(li).text().indexOf(' '), $(li).text().length));
+    li.innerHTML = newVal +
+      li.innerHTML.substring(li.innerHTML.indexOf(' '), li.innerHTML.length);
   });
 }
 
@@ -33,16 +36,25 @@ function getRecipeIdFromUrl(){
 function confirmDelete(){
   var returnValue = confirm('WARNING: Are you sure you want to permanently delete this recipe?');
   if ( returnValue == true ) {
-    $.ajax({ url: 'deleterecipe.php',
-         async: false,
-         data: {id: getRecipeIdFromUrl()},
-         type: 'post',
-         success: function(output) {
-            if (output == "True") {
-              alert('Recipe deleted.');
-              window.location.href = "index.php";
-            }
-         }
+    // Delete recipe with given ID in DB using AJAX request
+    fetch('deleterecipe.php', {
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'id': getRecipeIdFromUrl()
+      })
+    })
+    .then( function(response) {
+      response.json()
+      .then(function(data) {
+        if (data == "True") {
+          alert('Recipe deleted.');
+          window.location.href = "index.php";
+        }
+      });
     });
   }
 }
@@ -53,54 +65,55 @@ document.addEventListener("DOMContentLoaded", function(event) {
   getOriginalNumberServes();
   getOriginalIngredientQtys();
 
-  $('#plus').click(function(e){
-      // Stop acting like a button
-      e.preventDefault();
+  document.getElementById('plus').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
 
-      // Get the current value
-      var currentVal = parseInt($('#serves').text());
+    // Get the current value
+    var currentVal = parseInt(document.getElementById('serves').innerHTML);
 
-      var newVal = 0;
+    var newVal = 0;
 
-      // If is not undefined and not above maximum number of serves, increment
-      if (!isNaN(currentVal)) {
-          if (currentVal < MAX_SERVES) {
-            newVal = currentVal + 1;
-            $('#serves').text(newVal);
-          }
-          else {
-            newVal = MAX_SERVES;
-          }
-      } else {
-          // Otherwise set value to 1
-          newVal = 1;
-          $('#serves').text(newVal);
-      }
-      updateIngredientQtys(originalNumberServes, newVal);
+    // If is not undefined and not above maximum number of serves, increment
+    if (!isNaN(currentVal)) {
+        if (currentVal < MAX_SERVES) {
+          newVal = currentVal + 1;
+          document.getElementById('serves').innerHTML = newVal;
+        }
+        else {
+          newVal = MAX_SERVES;
+        }
+    } else {
+        // Otherwise set value to 1
+        newVal = 1;
+        document.getElementById('serves').innerHTML = newVal;
+    }
+    updateIngredientQtys(originalNumberServes, newVal);
   });
 
-  $('#minus').click(function(e) {
-      // Stop acting like a button
-      e.preventDefault();
+  document.getElementById('minus').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
 
-      // Get the current value
-      var currentVal = parseInt($('#serves').text());
+    // Get the current value
+    var currentVal = parseInt(document.getElementById('serves').innerHTML);
 
-      var newVal = 0;
+    var newVal = 0;
 
-      // If it is not undefined or value is greater than 1, decrement
-      if (!isNaN(currentVal) && currentVal > 1) {
-          newVal = currentVal - 1;
-          $('#serves').text(newVal);
+    // If it is not undefined or value is greater than 1, decrement
+    if (!isNaN(currentVal) && currentVal > 1) {
+        newVal = currentVal - 1;
+        document.getElementById('serves').innerHTML = newVal;
 
-      } else {
-          // Otherwise set value to 1
-          newVal = 1;
-          $('#serves').text(newVal);
-      }
-      updateIngredientQtys(originalNumberServes, newVal);
+    } else {
+        // Otherwise set value to 1
+        newVal = 1;
+        document.getElementById('serves').innerHTML = newVal;
+    }
+    updateIngredientQtys(originalNumberServes, newVal);
   });
 
-  $('#edit-button-link').attr('href', 'editrecipe.php?id=' + getRecipeIdFromUrl());
+  document.getElementById('edit-button-link')
+    .setAttribute('href', 'editrecipe.php?id=' + getRecipeIdFromUrl());
 
 });

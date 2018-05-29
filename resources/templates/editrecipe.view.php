@@ -1,7 +1,7 @@
 <main>
 	<div class="flex-container-centered">
 		<div class="add-recipe-container">
-			<form id="formInput" method="post" action="" enctype="multipart/form-data" onsubmit="<?php echo $on_submit_action; ?>">
+			<form id="formInput" method="post" enctype="multipart/form-data">
 				<h1><?php echo $main_header; ?></h1>
 				<h3>Recipe name:</h3>
 				<input type="text" class="full-width" id="recipe-name" name="name" maxlength="100" placeholder="Recipe name" value="<?php echo $recipe_name; ?>" required />
@@ -36,7 +36,7 @@
 				<input type="text" class="full-width" name="credit" maxlength="100" placeholder="Name of original source" value="<?php echo $credit; ?>" />
 				<input type="text" class="full-width" name="credit_link" maxlength="100" placeholder="Link to website (if applicable)" value="<?php echo $credit_link; ?>" />
 				<div class="submit-buttons-div">
-					<button type="submit" name="discard" formnovalidate><i class="fas fa-trash"></i> Cancel</button>
+					<button id="discard"><i class="fas fa-trash"></i> Cancel</button>
 					<button type="submit" name="save"><h3 class="save-button-text"><i class="fas fa-save"></i> Save recipe</h3></button>
 				</div>
 			</form>

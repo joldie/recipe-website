@@ -11,11 +11,7 @@ require_once '../config.php';
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
 
-if (isset($_POST['discard'])) {
-  // Redirect back to recipe page
-  echo "<script> window.location.replace('recipe.php?id={$_GET['id']}') </script>";
-  die();
-} elseif (isset($_POST['name'])) {
+if (isset($_POST['name'])) {
   // If user inputted data, check and insert into database
   $name = $_POST['name'];
   $date = date("Y-m-d H:i:s", time());

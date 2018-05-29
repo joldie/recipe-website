@@ -1,124 +1,164 @@
 var MAX_INPUT_FIELDS = 20;
 
 function checkFormData() {
-  var result = false;
   // Check if there is a recipe in DB with the same name
-  $.ajax({ url: 'recipeindb.php',
-       async: false,
-       data: {name: $('#recipe-name').val()},
-       type: 'post',
-       success: function(output) {
-          if (output == "False") {
-            result = true;
-          } else {
-            alert('Recipe with that name already exists. Please try something else.');
-            $('html,body').animate({scrollTop: 100}, 500);
-            $('#recipe-name').focus();
-            result = false;
-          }
-       }
+  fetch('recipeindb.php', {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      'name': document.getElementById('recipe-name').value
+    })
+  })
+  .then( function(response) {
+    response.json()
+    .then(function(data) {
+      if (data == "True") {
+        alert('Recipe with that name already exists. Please try something else.');
+        document.getElementById('recipe-name').focus();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        callBack();
+      }
+    });
   });
-  return result;
 }
 
-// jQuery code on page load
-$(function () {
+function callBack() {
+  // Submit form only once AJAX call has completed successfully
+  document.getElementById('formInput').submit();
+}
 
-  // Clear all text input fields
-  $('#formInput').find("input[type=text], textarea, input[type='file']").val('');
-
-  // Set focus to first text input
-  $('#recipe-name').focus();
-
-  $('#plus-ingredient').click(function(e){
-      // Stop acting like a button
-      e.preventDefault();
-
-      // Get the current value
-      var currentVal = $('.ingredient-input').length;
-
-      // If is not undefined and not above maximum number of inputs, add new input
-      if (!isNaN(currentVal)) {
-          if (currentVal < MAX_INPUT_FIELDS) {
-            $('#ingredient1')
-                    .clone()
-                    .attr({'id': 'ingredient'+ (currentVal+1), 'name': 'ingredient'+ (currentVal+1)})
-                    .insertAfter('[id^=ingredient]:last');
-            $('[id^=ingredient]:last').children('#qty1').attr({'id': 'qty'+ (currentVal+1), 'name': 'qty'+ (currentVal+1)});
-            $('[id^=ingredient]:last').children('[id^=qty]').val('');
-            $('[id^=ingredient]:last').children('#unit1').attr({'id': 'unit'+ (currentVal+1), 'name': 'unit'+ (currentVal+1)});
-            $('[id^=ingredient]:last').children('[id^=unit]').val('');
-            $('[id^=ingredient]:last').children('#item1').attr({'id': 'item'+ (currentVal+1), 'name': 'item'+ (currentVal+1)});
-            $('[id^=ingredient]:last').children('[id^=item]').val('');
-          }
-      }
-  });
-
-  $('#minus-ingredient').click(function(e) {
-      // Stop acting like a button
-      e.preventDefault();
-
-      // Get the current value
-      var currentVal = $('.ingredient-input').length;
-
-      var newVal = 0;
-
-      // If it is not undefined or value is greater than 1, remove input
-      if (!isNaN(currentVal) && currentVal > 1) {
-          $('#ingredient'+(currentVal)).remove();
-
-      }
-  });
-
-  $('#plus-step').click(function(e){
-      // Stop acting like a button
-      e.preventDefault();
-
-      // Get the current value
-      var currentVal = $('.step-input').length;
-
-      // If is not undefined and not above maximum number of inputs, add new input
-      if (!isNaN(currentVal)) {
-          if (currentVal < MAX_INPUT_FIELDS) {
-            $('#step1')
-                    .clone()
-                    .attr({'id': 'step'+ (currentVal+1), 'name': 'step'+ (currentVal+1), 'placeholder': 'Step '+ (currentVal+1)})
-                    .val('')
-                    .insertAfter('[id^=step]:last');
-          }
-      }
-  });
-
-  $('#minus-step').click(function(e) {
-      // Stop acting like a button
-      e.preventDefault();
-
-      // Get the current value
-      var currentVal = $('.step-input').length;
-
-      var newVal = 0;
-
-      // If it is not undefined or value is greater than 1, remove input
-      if (!isNaN(currentVal) && currentVal > 1) {
-          $('#step'+(currentVal)).remove();
-
-      }
-  });
+function updateImageDisplay() {
 
   var imgInput = document.querySelector('.img-upload');
-  imgInput.addEventListener('change', updateImageDisplay);
+  var imgPreview = document.querySelector('.img-preview');
+  var selectedFiles = imgInput.files;
 
-  function updateImageDisplay() {
-    var selectedFiles = imgInput.files;
-    if(selectedFiles.length === 1) {
-      if (selectedFiles[0].size > 2000000) {
-        alert("Image file size exceeds 2MB. Please select another image.");
-        imgInput.value = '';
-        $('.img-preview').attr('src', 'images/image.png');
-      } else {
-        $('.img-preview').attr('src', window.URL.createObjectURL(selectedFiles[0]));
-      }
+  if(selectedFiles.length === 1) {
+    if (selectedFiles[0].size > 2000000) {
+      alert("Image file size exceeds 2MB. Please select another image.");
+      imgInput.value = '';
+      imgPreview.setAttribute('src', 'images/image.png');
+    } else {
+      imgPreview.setAttribute('src', window.URL.createObjectURL(selectedFiles[0]));
     }
   }
+
+}
+
+// Code on page load
+document.addEventListener("DOMContentLoaded", function(event) {
+
+  // Clear all text input fields
+  document.getElementById('formInput').querySelectorAll("input[type=text], textarea, input[type='file']").value = "";
+
+  document.getElementById('plus-ingredient').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
+
+    // Get the current number of fields
+    var numberInputFields =
+      document.querySelectorAll('.ingredient-input').length;
+
+    // If is not undefined and not above maximum number of inputs,
+    // add new input
+    if (!isNaN(numberInputFields) && numberInputFields < MAX_INPUT_FIELDS) {
+
+      var firstNode = document.getElementById('ingredient1');
+      var newNode = firstNode.cloneNode(true);
+      var newName = 'ingredient' + (numberInputFields + 1);
+      newNode.setAttribute('id', newName);
+      newNode.setAttribute('name', newName);
+      firstNode.parentNode.insertBefore(newNode, null); // Insert at end
+
+      document.getElementById(newName).children[0].setAttribute('id', 'qty' + (numberInputFields + 1));
+      document.getElementById(newName).children[0].setAttribute('name', 'qty' + (numberInputFields + 1));
+      document.getElementById(newName).children[0].value = '';
+      document.getElementById(newName).children[1].setAttribute('id', 'unit' + (numberInputFields + 1));
+      document.getElementById(newName).children[1].setAttribute('name', 'unit' + (numberInputFields + 1));
+      document.getElementById(newName).children[1].value = '';
+      document.getElementById(newName).children[2].setAttribute('id', 'item' + (numberInputFields + 1));
+      document.getElementById(newName).children[2].setAttribute('name', 'item' + (numberInputFields + 1));
+      document.getElementById(newName).children[2].value = '';
+    }
+  });
+
+  document.getElementById('minus-ingredient').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
+
+    // Get the current number of fields
+    var numberInputFields =
+      document.querySelectorAll('.ingredient-input').length;
+
+    var newVal = 0;
+
+    // If it is not undefined or value is greater than 1, remove input
+    if (!isNaN(numberInputFields) && numberInputFields > 1) {
+        document.getElementById('ingredient' + (numberInputFields)).remove();
+
+    }
+  });
+
+  document.getElementById('plus-step').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
+
+    // Get the current number of fields
+    var numberInputFields =
+      document.querySelectorAll('.step-input').length;
+
+    // If is not undefined and not above maximum number of inputs,
+    // add new input
+    if (!isNaN(numberInputFields) && numberInputFields < MAX_INPUT_FIELDS) {
+      var firstNode = document.getElementById('step1');
+      var newNode = firstNode.cloneNode(true);
+      var newName = 'step' + (numberInputFields + 1);
+      newNode.setAttribute('id', newName);
+      newNode.setAttribute('name', newName);
+      newNode.setAttribute('placeholder', 'Step '+ (numberInputFields+1));
+      newNode.value = '';
+      firstNode.parentNode.insertBefore(newNode, null); // Insert at end
+    }
+  });
+
+  document.getElementById('minus-step').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
+
+    // Get the current number of fields
+    var numberInputFields =
+      document.querySelectorAll('.step-input').length;
+
+    var newVal = 0;
+
+    // If it is not undefined or value is greater than 1, remove input
+    if (!isNaN(numberInputFields) && numberInputFields > 1) {
+        document.getElementById('step' + (numberInputFields)).remove();
+    }
+  });
+
+  document.getElementById('discard').addEventListener('click', function(e) {
+    // Stop acting like a button
+    e.preventDefault();
+    // Return to homepage
+    window.location.replace('index.php');
+  });
+
+  document.getElementById('formInput').addEventListener('submit', function (e) {
+    // Prevent default behaviour
+    e.preventDefault();
+    // Check user input data with AJAX call before submitting form
+    checkFormData();
+  });
+
+  // Check user-uploaded image and update display
+  document.querySelector('.img-upload').addEventListener('change', updateImageDisplay);
+
+  // Set focus to first text input
+  document.getElementById('recipe-name').focus();
 
 });
