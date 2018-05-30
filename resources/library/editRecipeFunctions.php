@@ -82,3 +82,24 @@ function get_recipe_by_id($id, $db_collection) {
   }
   return $db_collection->findOne([ '_id' => $mongodb_id]);
 }
+
+/*
+--> Error running function (config undefined), so leave out for now
+
+function tinifyImage($imagePath) {
+
+  require_once 'vendor/autoload.php'; // Include Composer's autoloader
+
+  \Tinify\setKey($config['tinify_api_key']);
+
+  $imageData = \Tinify\fromBuffer(file_get_contents($imagePath));
+  $resizedImageData = $imageData->resize(array(
+      "method" => "fit",
+      "width" => 1500,
+      "height" => 1000
+  ));
+
+  return $resizedImageData->toBuffer();
+
+}
+*/

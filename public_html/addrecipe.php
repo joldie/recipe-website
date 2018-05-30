@@ -1,6 +1,13 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| Load config file and libraries
+|--------------------------------------------------------------------------
+*/
+
 require_once '../config.php';
+require_once LIBRARY_PATH . "/editRecipeFunctions.php";
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +47,18 @@ if (isset($_POST['name'])) {
   }
 
   if ($_FILES['image']['name'] !== '') {
-    $image = new MongoDB\BSON\Binary(file_get_contents($_FILES['image']['tmp_name']), MongoDB\BSON\Binary::TYPE_GENERIC);
+    // Resize uploaded image using tinify API
+    require_once 'vendor/autoload.php'; // Include Composer's autoloader
+    \Tinify\setKey($config['tinify_api_key']);
+
+    $imageData = \Tinify\fromBuffer(file_get_contents($_FILES['image']['tmp_name']));
+    $resizedImage = $imageData->resize(array(
+        "method" => "fit",
+        "width" => 1500,
+        "height" => 1000
+    ))->toBuffer();
+
+    $image = new MongoDB\BSON\Binary($resizedImage, MongoDB\BSON\Binary::TYPE_GENERIC);
     $image_type = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
   }
   else {
@@ -49,22 +67,27 @@ if (isset($_POST['name'])) {
     $image_type = 'png';
   }
 
-  // Insert recipe into DB
-  $result = $collection->insertOne([
-    'name' => $name,
-    'date' => $date,
-    'description' => $description,
-    'serves' => $serves,
-    'preptime' => $preptime,
-    'cooktime' => $cooktime,
-    'credit' => $credit,
-    'credit_link' => $credit_link,
-    'tags' => $tags,
-    'ingredients' => $ingredients,
-    'steps' => $steps,
-		'image' => $image,
-		'image_type' => $image_type
-	]);
+  try {
+    // Insert recipe into DB
+    $result = $collection->insertOne([
+      'name' => $name,
+      'date' => $date,
+      'description' => $description,
+      'serves' => $serves,
+      'preptime' => $preptime,
+      'cooktime' => $cooktime,
+      'credit' => $credit,
+      'credit_link' => $credit_link,
+      'tags' => $tags,
+      'ingredients' => $ingredients,
+      'steps' => $steps,
+  		'image' => $image,
+  		'image_type' => $image_type
+  	]);
+  } catch (\Exception $e) {
+    echo "7The error message is: " . $e->getMessage();
+  }
+
 
   echo "<script> alert('Recipe successfully saved.') </script>";
 
@@ -80,8 +103,6 @@ if (isset($_POST['name'])) {
 |--------------------------------------------------------------------------
 */
 
-require_once LIBRARY_PATH . "/editRecipeFunctions.php";
-
 $main_header = "Add Recipe";
 $recipe_name = "";
 $recipe_description = "";
@@ -92,6 +113,8 @@ $preptime = "10";
 $cooktime = "10";
 $ingredients_html = generate_ingredients_html(null);
 $steps_html = generate_steps_html(null);
+$credit = "";
+$credit_link = "";
 
 /*
 |--------------------------------------------------------------------------

@@ -10,5 +10,6 @@ All code dedicated to the world-wide public domain under a Creative Commons Zero
 
 External libraries/tools used:
 - Normalize CSS (https://necolas.github.io/normalize.css/)
-- FontAwesome CSS (https://fontawesome.com/)
+- FontAwesome CSS (https://fontawesome.com/), for icons and placeholder images
 - Google Fonts (https://fonts.google.com/)
+- Tinify API (https://tinypng.com/), for compressing images
