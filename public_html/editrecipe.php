@@ -54,8 +54,8 @@ if (isset($_POST['name'])) {
     $imageData = \Tinify\fromBuffer(file_get_contents($_FILES['image']['tmp_name']));
     $resizedImage = $imageData->resize(array(
         "method" => "fit",
-        "width" => 1500,
-        "height" => 1000
+        "width" => 900,
+        "height" => 600
     ))->toBuffer();
 
     $image = new MongoDB\BSON\Binary($resizedImage, MongoDB\BSON\Binary::TYPE_GENERIC);
@@ -107,6 +107,7 @@ if (isset($_POST['name'])) {
 */
 
 $main_header = "Edit Recipe";
+$max_upload_size = $config['max_upload_size_MB'];
 $images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
 
 // If recipe in DB, display current values in form

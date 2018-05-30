@@ -8,7 +8,7 @@
 				<h3>Description:</h3>
 				<textarea rows="4" class="full-width" name="description" placeholder="Describe the recipe in a sentence or two..."><?php echo $recipe_description; ?></textarea>
 				<h3>Image:</h3>
-				<p>(max file size: 2 MB)</p>
+				<p>(max file size: <span id="max-upload"><?php echo $max_upload_size; ?></span> MB)</p>
 				<input name="image" type="file" class="img-upload" accept=".jpg, .jpeg, .png">
 				<div class="img-preview-div">
 					<img class="img-preview" src="<?php echo $image_src; ?>" />

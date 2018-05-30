@@ -38,21 +38,20 @@ function callBack() {
 }
 
 function updateImageDisplay() {
-
   var imgInput = document.querySelector('.img-upload');
   var imgPreview = document.querySelector('.img-preview');
   var selectedFiles = imgInput.files;
 
   if(selectedFiles.length === 1) {
-    if (selectedFiles[0].size > 2000000) {
-      alert("Image file size exceeds 2MB. Please select another image.");
+    var maxUploadMB = parseInt(document.getElementById('max-upload').innerHTML);
+    if (selectedFiles[0].size > (maxUploadMB * 1000000)) {
+      alert("Image file size exceeds " + maxUploadMB + "MB. Please select another image.");
       imgInput.value = '';
       imgPreview.setAttribute('src', 'images/image.png');
     } else {
       imgPreview.setAttribute('src', window.URL.createObjectURL(selectedFiles[0]));
     }
   }
-
 }
 
 // Code on page load

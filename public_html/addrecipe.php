@@ -54,8 +54,8 @@ if (isset($_POST['name'])) {
     $imageData = \Tinify\fromBuffer(file_get_contents($_FILES['image']['tmp_name']));
     $resizedImage = $imageData->resize(array(
         "method" => "fit",
-        "width" => 1500,
-        "height" => 1000
+        "width" => 900,
+        "height" => 600
     ))->toBuffer();
 
     $image = new MongoDB\BSON\Binary($resizedImage, MongoDB\BSON\Binary::TYPE_GENERIC);
@@ -67,27 +67,22 @@ if (isset($_POST['name'])) {
     $image_type = 'png';
   }
 
-  try {
-    // Insert recipe into DB
-    $result = $collection->insertOne([
-      'name' => $name,
-      'date' => $date,
-      'description' => $description,
-      'serves' => $serves,
-      'preptime' => $preptime,
-      'cooktime' => $cooktime,
-      'credit' => $credit,
-      'credit_link' => $credit_link,
-      'tags' => $tags,
-      'ingredients' => $ingredients,
-      'steps' => $steps,
-  		'image' => $image,
-  		'image_type' => $image_type
-  	]);
-  } catch (\Exception $e) {
-    echo "7The error message is: " . $e->getMessage();
-  }
-
+  // Insert recipe into DB
+  $result = $collection->insertOne([
+    'name' => $name,
+    'date' => $date,
+    'description' => $description,
+    'serves' => $serves,
+    'preptime' => $preptime,
+    'cooktime' => $cooktime,
+    'credit' => $credit,
+    'credit_link' => $credit_link,
+    'tags' => $tags,
+    'ingredients' => $ingredients,
+    'steps' => $steps,
+		'image' => $image,
+		'image_type' => $image_type
+	]);
 
   echo "<script> alert('Recipe successfully saved.') </script>";
 
@@ -106,6 +101,7 @@ if (isset($_POST['name'])) {
 $main_header = "Add Recipe";
 $recipe_name = "";
 $recipe_description = "";
+$max_upload_size = $config['max_upload_size_MB'];
 $images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
 $image_src = $images_path_relative . "/image.png";
 $serves = "1";
