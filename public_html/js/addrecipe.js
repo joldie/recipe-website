@@ -1,5 +1,9 @@
 var MAX_INPUT_FIELDS = 20;
 
+function showLoadingScreen() {
+  document.querySelector('.full-page-loading-canvas').style.display = 'block';
+}
+
 function checkFormData() {
   // Check if there is a recipe in DB with the same name
   fetch('recipeindb.php', {
@@ -27,6 +31,8 @@ function checkFormData() {
 }
 
 function callBack() {
+  // Show loading screen before page submit (image compression takes long time)
+  showLoadingScreen();
   // Submit form only once AJAX call has completed successfully
   document.getElementById('formInput').submit();
 }

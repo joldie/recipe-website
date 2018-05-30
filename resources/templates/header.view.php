@@ -23,6 +23,23 @@
 
 <body>
 
+	<div class="full-page-loading-canvas">
+		<div class="loading-circle">
+		  <div class="loading-circle1 loading-circle-child"></div>
+		  <div class="loading-circle2 loading-circle-child"></div>
+		  <div class="loading-circle3 loading-circle-child"></div>
+		  <div class="loading-circle4 loading-circle-child"></div>
+		  <div class="loading-circle5 loading-circle-child"></div>
+		  <div class="loading-circle6 loading-circle-child"></div>
+		  <div class="loading-circle7 loading-circle-child"></div>
+		  <div class="loading-circle8 loading-circle-child"></div>
+		  <div class="loading-circle9 loading-circle-child"></div>
+		  <div class="loading-circle10 loading-circle-child"></div>
+		  <div class="loading-circle11 loading-circle-child"></div>
+		  <div class="loading-circle12 loading-circle-child"></div>
+		</div>
+	</div>
+
 	<header>
 		<a href="index.php">
 		<div class="top-logo-name">

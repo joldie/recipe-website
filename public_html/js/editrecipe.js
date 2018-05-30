@@ -1,15 +1,16 @@
 var MAX_INPUT_FIELDS = 20;
 
-function getRecipeIdFromUrl(){
+function showLoadingScreen() {
+  document.querySelector('.full-page-loading-canvas').style.display = 'block';
+}
 
+function getRecipeIdFromUrl(){
   var url = document.URL;
   id = url.substring(url.indexOf("=") + 1);
   return id;
-
 }
 
 function updateImageDisplay() {
-
   var imgInput = document.querySelector('.img-upload');
   var imgPreview = document.querySelector('.img-preview');
   var selectedFiles = imgInput.files;
@@ -23,7 +24,6 @@ function updateImageDisplay() {
       imgPreview.setAttribute('src', window.URL.createObjectURL(selectedFiles[0]));
     }
   }
-
 }
 
 // Code on page load
@@ -120,6 +120,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     e.preventDefault();
     // Return to recipe page
     window.location.replace('recipe.php?id=' + getRecipeIdFromUrl());
+  });
+
+  document.getElementById('formInput').addEventListener('submit', function (e) {
+    // Show loading screen before page submit (image compression takes long time)
+    showLoadingScreen();
   });
 
   // Check user-uploaded image and update display
