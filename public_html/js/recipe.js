@@ -27,6 +27,14 @@ function updateIngredientQtys(original_num_serves, new_num_serves){
   });
 }
 
+function showLoadingScreen() {
+  document.querySelector('.full-page-loading-canvas').style.display = 'block';
+}
+
+function hideLoadingScreen() {
+  document.querySelector('.full-page-loading-canvas').style.display = 'none';
+}
+
 function getRecipeIdFromUrl(){
   var url = document.URL;
   id = url.substring(url.indexOf("=") + 1);
@@ -36,6 +44,8 @@ function getRecipeIdFromUrl(){
 function confirmDelete(){
   var returnValue = confirm('WARNING: Are you sure you want to permanently delete this recipe?');
   if ( returnValue == true ) {
+    // Show loading screen in case query takes long time
+    showLoadingScreen();
     // Delete recipe with given ID in DB using AJAX request
     fetch('deleterecipe.php', {
       method: "post",
@@ -51,6 +61,7 @@ function confirmDelete(){
       response.json()
       .then(function(data) {
         if (data == "True") {
+          hideLoadingScreen();
           alert('Recipe deleted.');
           window.location.href = "index.php";
         }
