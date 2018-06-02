@@ -9,7 +9,7 @@
     display: inline;
   }
 
-  .header-title {
+  .header-title-large {
     margin-left: 0;
     margin-right: 55px;
   }
@@ -138,15 +138,17 @@
 }
 
 /* Very small screens
-   - Title text hidden
+   - Title text shrinks
    - Recipe page layout single column */
 @media screen and (max-width: 450px) {
-  .header-title {
-    opacity: 0;
+  .header-title-large {
+    display: none;
+  }
 
-    /* Reduce font size to avoid breaking to new line and shifting image
-    on very small screen. */
-    font-size: 10px;
+  .header-title-small {
+    display: inline;
+    margin-left: 0;
+    margin-right: 45px;
   }
 
   .recipe-content-grid {

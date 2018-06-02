@@ -44,7 +44,8 @@
 		<a href="index.php">
 		<div class="top-logo-name">
 			<h1><i class="fas fa-utensils"></i></h1>
-			<h1 class="header-title normal-text">recipes:<b>rebooted</b></h1>
+			<h1 class="header-title-large normal-text">recipes:<b>rebooted</b></h1>
+			<h1 class="header-title-small normal-text">r:<b>r</b></h1>
 		</div>
 		</a>
 

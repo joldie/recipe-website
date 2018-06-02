@@ -58,12 +58,16 @@ body {
   font-weight: normal;
 }
 
-.header-title {
+.header-title-large {
   margin-left: 10px;
 }
 
-.header-title-bold {
+.header-title-large-bold {
   font-weight: bold;
+}
+
+.header-title-small {
+  display: none;
 }
 
 header {
