@@ -4,11 +4,11 @@ Website for posting and finding vegan food recipes.
 
 - [Recipe Website](#recipe-website)
   - [Description](#description)
-  - [Setup](#setup)
-    - [Mongo DB Collection](#mongo-db-collection)
+      - [External libraries/tools used](#external-librariestools-used)
+  - [Installation](#installation)
+      - [Mongo database collection](#mongo-database-collection)
   - [Contributing](#contributing)
   - [License](#license)
-  - [External Libraries/Tools](#external-librariestools)
 
 ## Description
 
@@ -16,17 +16,30 @@ This is a small project with the main goal of improving my web development skill
 
 Written in PHP / HTML5 / CSS3 / JavaScript, using a Mongo database.
 
-## Setup
+#### External libraries/tools used
+
+- [Normalize CSS](https://necolas.github.io/normalize.css/)
+- [Google Fonts](https://fonts.google.com/)
+- [FontAwesome CSS](https://fontawesome.com/)
+  - for icons and placeholder images
+- [Tinify](https://tinypng.com/)
+  - for compressing images
+
+## Installation
 
 1. Install Mongo database on web server
    - Create text index for search functionality:
-`db.recipes.createIndex({name:"text", description:"text", "ingredients.item":"text", tags:"text"})`
+```
+db.recipes.createIndex({name:"text", description:"text", "ingredients.item":"text", tags:"text"})
+```
 2. Install Composer PHP package manager in project folder and install `mongodb` and `tinify` packages:
-   - `php composer.phar require mongodb/mongodb`
-   - `php composer.phar require tinify/tinify`
+```
+php composer.phar require mongodb/mongodb
+php composer.phar require tinify/tinify
+```
 3. Copy `config.php` file to root directory (example below)
 
-```
+```php
 <?php
 
 // Example config.php file
@@ -53,7 +66,7 @@ define("TEMPLATES_PATH", realpath(dirname(__FILE__)) . '/resources/templates');
 define("LIBRARY_PATH", realpath(dirname(__FILE__)) . '/resources/library');
  ```
 
-### Mongo DB Collection
+#### Mongo database collection
 
 Collection name = `recipe`
 
@@ -81,12 +94,3 @@ All contributions are welcome, particularly feedback on code quality, bug report
 ## License
 
 All code dedicated to the world-wide public domain under a [Creative Commons Zero v1.0 Universal License](https://creativecommons.org/publicdomain/zero/1.0/)
-
-## External Libraries/Tools
-
-- [Normalize CSS](https://necolas.github.io/normalize.css/)
-- [Google Fonts](https://fonts.google.com/)
-- [FontAwesome CSS](https://fontawesome.com/)
-  - for icons and placeholder images
-- [Tinify](https://tinypng.com/)
-  - for compressing images
