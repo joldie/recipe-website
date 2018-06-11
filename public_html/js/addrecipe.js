@@ -16,18 +16,18 @@ function checkFormData() {
       'name': document.getElementById('recipe-name').value
     })
   })
-  .then( function(response) {
-    response.json()
-    .then(function(data) {
-      if (data == "True") {
-        alert('Recipe with that name already exists. Please try something else.');
-        document.getElementById('recipe-name').focus();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        callBack();
-      }
+    .then(function (response) {
+      response.json()
+        .then(function (data) {
+          if (data == "True") {
+            alert('Recipe with that name already exists. Please try something else.');
+            document.getElementById('recipe-name').focus();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          } else {
+            callBack();
+          }
+        });
     });
-  });
 }
 
 function callBack() {
@@ -42,7 +42,7 @@ function updateImageDisplay() {
   var imgPreview = document.querySelector('.img-preview');
   var selectedFiles = imgInput.files;
 
-  if(selectedFiles.length === 1) {
+  if (selectedFiles.length === 1) {
     var maxUploadMB = parseInt(document.getElementById('max-upload').innerHTML);
     if (selectedFiles[0].size > (maxUploadMB * 1000000)) {
       alert("Image file size exceeds " + maxUploadMB + "MB. Please select another image.");
@@ -55,12 +55,12 @@ function updateImageDisplay() {
 }
 
 // Code on page load
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
   // Clear all text input fields
   document.getElementById('formInput').querySelectorAll("input[type=text], textarea, input[type='file']").value = "";
 
-  document.getElementById('plus-ingredient').addEventListener('click', function(e) {
+  document.getElementById('plus-ingredient').addEventListener('click', function (e) {
     // Stop acting like a button
     e.preventDefault();
 
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
   });
 
-  document.getElementById('minus-ingredient').addEventListener('click', function(e) {
+  document.getElementById('minus-ingredient').addEventListener('click', function (e) {
     // Stop acting like a button
     e.preventDefault();
 
@@ -103,12 +103,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // If it is not undefined or value is greater than 1, remove input
     if (!isNaN(numberInputFields) && numberInputFields > 1) {
-        document.getElementById('ingredient' + (numberInputFields)).remove();
+      document.getElementById('ingredient' + (numberInputFields)).remove();
 
     }
   });
 
-  document.getElementById('plus-step').addEventListener('click', function(e) {
+  document.getElementById('plus-step').addEventListener('click', function (e) {
     // Stop acting like a button
     e.preventDefault();
 
@@ -124,13 +124,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       var newName = 'step' + (numberInputFields + 1);
       newNode.setAttribute('id', newName);
       newNode.setAttribute('name', newName);
-      newNode.setAttribute('placeholder', 'Step '+ (numberInputFields+1));
+      newNode.setAttribute('placeholder', 'Step ' + (numberInputFields + 1));
       newNode.value = '';
       firstNode.parentNode.insertBefore(newNode, null); // Insert at end
     }
   });
 
-  document.getElementById('minus-step').addEventListener('click', function(e) {
+  document.getElementById('minus-step').addEventListener('click', function (e) {
     // Stop acting like a button
     e.preventDefault();
 
@@ -142,11 +142,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // If it is not undefined or value is greater than 1, remove input
     if (!isNaN(numberInputFields) && numberInputFields > 1) {
-        document.getElementById('step' + (numberInputFields)).remove();
+      document.getElementById('step' + (numberInputFields)).remove();
     }
   });
 
-  document.getElementById('discard').addEventListener('click', function(e) {
+  document.getElementById('discard').addEventListener('click', function (e) {
     // Stop acting like a button
     e.preventDefault();
     // Return to homepage
@@ -162,8 +162,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   // Check user-uploaded image and update display
   document.querySelector('.img-upload').addEventListener('change', updateImageDisplay);
-
-  // Set focus to first text input
-  document.getElementById('recipe-name').focus();
 
 });
