@@ -1,4 +1,5 @@
 config.php
+public_html/composer.json
 public_html/composer.phar
 public_html/composer.lock
 public_html/vendor/
