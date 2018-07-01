@@ -34,7 +34,7 @@ if ($result !== null) {
   $tags = "";
   if ($result['tags'] != null) {
     foreach ($result['tags'] as $tag) {
-        $tags = $tags . "<span>$tag</span>";
+        $tags = $tags . "<span class='tag-display'>$tag</span>";
     }
   }
 

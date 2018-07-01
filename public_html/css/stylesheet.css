@@ -1,16 +1,15 @@
 /* Global variables */
+
 :root {
   /* Standard background, border, box colors */
   --main-bg-color: #efefef;
   --alt-bg-color: #356629;
   --light-bg-color: white;
   --dark-bg-color: #ccc;
-
   /* Standard font colors */
   --main-txt-color: #444;
   --alt-txt-color: #efefef;
   --light-txt-color: #777;
-
   /* Other colors */
   --link-hover-color: black;
 }
@@ -23,7 +22,6 @@ html {
   min-height: 100%;
   min-width: 320px;
   position: relative;
-
   /* Makes text more crisp, clear on all browsers: */
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -69,7 +67,6 @@ body {
 header {
   position: fixed;
   top: 0;
-
   /* Controls the vertical stacking order of elements that overlap: */
   z-index: 1000;
   height: 70px;
@@ -182,7 +179,6 @@ header h1::before {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-
   /* Following settings keep image width:height ratio fixed.
    16:9 ratio --> 9/16 = 0.5625 */
   height: 0;
@@ -274,6 +270,110 @@ header h1::before {
   margin: 5px;
 }
 
+.tags {
+  background-color: var(--light-bg-color);
+  border: 1px solid var(--dark-bg-color);
+  border-radius: 5px;
+  display: block;
+  line-height: 1.25;
+  padding: .25em 0 0 .25em;
+  cursor: text;
+  overflow: hidden;
+}
+
+.tags span {
+  display: block;
+  float: left;
+  position: relative;
+}
+
+.tags .tag,
+.tags-input {
+  background: var(--dark-bg-color);
+  margin: 0 .25em .25em 0;
+  padding: .25em .5em;
+  min-height: 1.5em;
+  cursor: default;
+}
+
+.tags .tag:before {
+  content: attr(data-tag)
+}
+
+.tags:after,
+.tags-view:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.tags a {
+  display: inline-block;
+  margin: 0 0 0 .5em;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tags a:before {
+  content: '\00D7'
+}
+
+.tags .tags-view {
+  float: none
+}
+
+.tags .tags-input {
+  float: none;
+  background: none;
+  cursor: inherit;
+  min-width: 1em;
+}
+
+.tags-input span {
+  float: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  padding: inherit;
+}
+
+.tags-input span+span {
+  position: static;
+  padding: 0;
+  opacity: .5;
+}
+
+.tags .tag+.tags-input {
+  float: left
+}
+
+.tags .tag+.tags-input span+span {
+  display: none
+}
+
+.tags-input span:focus+span {
+  opacity: .4
+}
+
+.tags-output {
+  position: fixed;
+  top: -9999px;
+  left: -9999px;
+}
+
+.tag-display {
+  display: inline-block;
+  background: var(--light-bg-color);
+  border: 1px solid var(--dark-bg-color);
+  border-radius: 3px;
+  margin: 3px;
+  padding: 3px;
+}
+
 .ingredient-input {
   border: 1px solid var(--dark-bg-color);
   border-radius: 5px;
@@ -294,7 +394,6 @@ header h1::before {
   display: block;
   margin-left: auto;
   margin-right: auto;
-
   /* Size image to fit screen, but limit max width */
   width: 90%;
   max-width: 400px;
@@ -376,7 +475,6 @@ blockquote a:hover {
   width: 100px;
   height: 100px;
   z-index: 9999;
-
   /* Position exactly in middle of screen */
   top: 50%;
   left: 50%;
@@ -531,7 +629,6 @@ blockquote a:hover {
     -webkit-transform: scale(0);
     transform: scale(0);
   }
-
   40% {
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -545,7 +642,6 @@ blockquote a:hover {
     -webkit-transform: scale(0);
     transform: scale(0);
   }
-
   40% {
     -webkit-transform: scale(1);
     transform: scale(1);
