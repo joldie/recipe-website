@@ -6,6 +6,7 @@
 
 		<div class='recipe-content-main'>
 			<h1><?php echo $recipe_name; ?></h1>
+			<?php echo $tags; ?>
 			<p>
 				<?php echo $recipe_description; ?>
 			</p>
@@ -17,7 +18,7 @@
 						<button id="minus" class="plusminus"><i class="fas fa-minus"></i></button>
 						<span id='serves'><?php echo $serves; ?></span>
 						<button id="plus" class="plusminus"><i class="fas fa-plus"></i></button>
-					 </td>
+					</td>
 				</tr>
 				<tr>
 					<td>Prep. time:</td>

@@ -31,6 +31,13 @@ if ($result !== null) {
 
   $recipe_name = $result['name'];
 
+  $tags = "";
+  if ($result['tags'] != null) {
+    foreach ($result['tags'] as $tag) {
+        $tags = $tags . "<span class='tag-display'>$tag</span>";
+    }
+  }
+
   $recipe_description = $result['description'];
   if ($recipe_description == "") { $recipe_description = "No description."; }
 
