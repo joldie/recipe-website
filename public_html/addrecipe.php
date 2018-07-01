@@ -28,7 +28,7 @@ if (isset($_POST['name'])) {
   $cooktime = $_POST['cooktime'];
   $credit = $_POST['credit'];
   $credit_link = $_POST['credit_link'];
-  //$tags = ['dinner', 'pasta'];
+  $tags = explode(',', $_POST['tags']);
 
   $num_ingredients = 0;
   $ingredients = [];
@@ -101,6 +101,7 @@ if (isset($_POST['name'])) {
 $main_header = "Add Recipe";
 $recipe_name = "";
 $recipe_description = "";
+$tags = "";
 $max_upload_size = $config['max_upload_size_MB'];
 $images_path_relative = str_replace(__DIR__ . "/", "", IMAGES_PATH);
 $image_src = $images_path_relative . "/image.png";

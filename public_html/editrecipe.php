@@ -28,7 +28,7 @@ if (isset($_POST['name'])) {
   $cooktime = $_POST['cooktime'];
   $credit = $_POST['credit'];
   $credit_link = $_POST['credit_link'];
-  //$tags = ['dinner', 'pasta'];
+  $tags = explode(',', $_POST['tags']);
 
   $num_ingredients = 0;
   $ingredients = [];
@@ -116,6 +116,7 @@ if ($result !== null) {
   $recipe_exists = true;
   $recipe_name = $result['name'];
   $recipe_description = $result['description'];
+  $tags = implode(",", (array) $result['tags']);
   $image_bin = base64_encode($result['image']->getData());
   $image_src = "data:image/" . $result['image_type'] . ";base64, $image_bin ";
   $serves = $result['serves'];

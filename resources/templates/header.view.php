@@ -17,6 +17,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Cutive+Mono:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/stylesheet.css">
 	<link rel="stylesheet" href="css/responsive.css">
+	<link rel="stylesheet" href="css/tags-input.css">
 	<link rel="icon" type="image/png" href="images/favicon.svg">
 
 </head>
