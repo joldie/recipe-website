@@ -2,7 +2,6 @@
 
 ## High priority
 - [ ] Add bugs as GitHub issues
-- [ ] Add tags: (addrecipe.php, recipe.php) include input/display fields for lowercase tag names (branch: add-tags-input)
 - [ ] CSS: Improve display on mobile phone, other browsers (e.g. input field sizes, styles). Need to reduce font size for small screens?
 - [ ] Performance: Implement image resizing/optimization direct on server, instead of external API
 - [ ] UX: (addrecipe.php, editrecipe.php) ability to delete arbitrary ingredient/step, not just the last one
@@ -21,7 +20,7 @@
 ## Low priority
 - [ ] UX: Button to rotate uploaded photos 90°
 - [ ] UX: (index.php) enable quotes "" and wildcards * in search, search for parts of words
-- [ ] UX: show suggestions for tags, based on previously used names
+- [ ] UX: show suggestions for tags, based on a) master list; and/or b) previously used tag names
 - [ ] CSS: highlight/underline menu links on hover
 - [ ] UX: loading screen turns to tick for successful query, etc (instead of alert box)
 - [ ] Perform Lighthouse audit via Chrome

@@ -8,7 +8,7 @@
 				<h3>Description:</h3>
 				<textarea rows="4" class="full-width" name="description" placeholder="Describe the recipe in a sentence or two..."><?php echo $recipe_description; ?></textarea>
 				<h3>Tags:</h3>
-				<input type="text" name="tags" class="full-width" placeholder="dinner, snack, salad, etc" value="<?php echo $tags; ?>">
+				<input type="text" name="tags" class="full-width" placeholder="dinner, snack, cold, warm..." value="<?php echo $tags; ?>">
 				<script src="js/tags-input.js"></script>
 				<script>
 					config = {

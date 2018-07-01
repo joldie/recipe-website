@@ -6,7 +6,7 @@
 
 		<div class='recipe-content-main'>
 			<h1><?php echo $recipe_name; ?></h1>
-			<?php echo $tags; ?>
+			Tag(s): <?php echo $tags; ?>
 			<p>
 				<?php echo $recipe_description; ?>
 			</p>

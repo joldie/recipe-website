@@ -375,7 +375,7 @@ header h1::before {
   border: 1px solid var(--dark-bg-color);
   border-radius: 3px;
   margin: 3px;
-  padding: 3px;
+  padding: 2px 5px;
 }
 
 .ingredient-input {
