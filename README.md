@@ -22,8 +22,6 @@ Written in PHP / HTML5 / CSS3 / JavaScript, using a Mongo database.
 - [Google Fonts](https://fonts.google.com/)
 - [FontAwesome CSS](https://fontawesome.com/)
   - for icons and placeholder images
-- [Tinify](https://tinypng.com/)
-  - for compressing images
 - [Tags Input Beautifier](https://github.com/tovic/tags-input-beautifier)
   - adapted code for recipe tag input
 
@@ -34,10 +32,9 @@ Written in PHP / HTML5 / CSS3 / JavaScript, using a Mongo database.
 ```
 db.recipes.createIndex({name:"text", description:"text", "ingredients.item":"text", tags:"text"})
 ```
-2. Install Composer PHP package manager in project folder and install `mongodb` and `tinify` packages:
+1. Install Composer PHP package manager in project folder and install `mongodb` package:
 ```
 php composer.phar require mongodb/mongodb
-php composer.phar require tinify/tinify
 ```
 3. Copy `config.php` file to root directory (example below)
 
@@ -58,7 +55,6 @@ $config = array(
   "urls" => array(
     "baseUrl" => "https://mydomain.com/recipes"
   ),
-  "tinify_api_key" => "...",
   "max_upload_size_MB" => 8
 );
 

@@ -47,17 +47,8 @@ if (isset($_POST['name'])) {
   }
 
   if ($_FILES['image']['name'] !== '') {
-    // Resize uploaded image using tinify API
-    require_once 'vendor/autoload.php'; // Include Composer's autoloader
-    \Tinify\setKey($config['tinify_api_key']);
-
-    $imageData = \Tinify\fromBuffer(file_get_contents($_FILES['image']['tmp_name']));
-    $resizedImage = $imageData->resize(array(
-        "method" => "fit",
-        "width" => 900,
-        "height" => 600
-    ))->toBuffer();
-
+    // Compress user-uploaded image before saving in database
+    $resizedImage = compress_image($_FILES['image']['tmp_name']);
     $image = new MongoDB\BSON\Binary($resizedImage, MongoDB\BSON\Binary::TYPE_GENERIC);
     $image_type = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
   }

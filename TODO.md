@@ -3,7 +3,6 @@
 ## High priority
 - [ ] Add bugs as GitHub issues
 - [ ] CSS: Improve display on mobile phone, other browsers (e.g. input field sizes, styles). Need to reduce font size for small screens?
-- [ ] Performance: Implement image resizing/optimization direct on server, instead of external API
 - [ ] UX: (addrecipe.php, editrecipe.php) ability to delete arbitrary ingredient/step, not just the last one
 
 ## Medium priority

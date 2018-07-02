@@ -83,23 +83,47 @@ function get_recipe_by_id($id, $db_collection) {
   return $db_collection->findOne([ '_id' => $mongodb_id]);
 }
 
-/*
---> Error running function (config undefined), so leave out for now
+function compress_image($source_file) {
+  $image_info = getimagesize($source_file);
+  $width = 900;
+  $height = 600;
+  $quality = 90;
 
-function tinifyImage($imagePath) {
+  if(!empty($image_info)) {
+    switch($image_info['mime']) {
+      case 'image/jpeg' :
+        $image_type = "jpeg";
+        // Create a new image from the file or the url.
+        $image = imagecreatefromjpeg($source_file);
+        $thumb = imagecreatetruecolor($width, $height);
+        
+        //Resize the $thumb image and save as temp file
+        imagecopyresampled($thumb, $image, 0, 0, 0, 0, $width, $height, $image_info[0], $image_info[1]);
+        $tempImage = "temp" . $image_type;
+        imagejpeg($thumb, $tempImage, $quality);
 
-  require_once 'vendor/autoload.php'; // Include Composer's autoloader
+        break;
+      case 'image/png' :
+        $image_type = "png";
+        // Create a new image from the file or the url.
+        $image = imagecreatefrompng($source_file);
+        $thumb = imagecreatetruecolor($width, $height);
+        
+        //Resize the $thumb image and save as temp file
+        imagecopyresampled($thumb, $image, 0, 0, 0, 0, $width, $height, $image_info[0], $image_info[1]);
+        $tempImage = "temp" . $image_type;
+        imagepng($thumb, $tempImage);
 
-  \Tinify\setKey($config['tinify_api_key']);
+        break;
+    }
+    // Convert image file to binary object
+    $resizedImage = file_get_contents($tempImage);
+    // Delete temp image file
+    unlink($tempImage);
+    
+    return $resizedImage;
 
-  $imageData = \Tinify\fromBuffer(file_get_contents($imagePath));
-  $resizedImageData = $imageData->resize(array(
-      "method" => "fit",
-      "width" => 1500,
-      "height" => 1000
-  ));
-
-  return $resizedImageData->toBuffer();
-
+  } else {
+    return null;
+  }
 }
-*/
