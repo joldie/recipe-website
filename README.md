@@ -24,6 +24,8 @@ Written in PHP / HTML5 / CSS3 / JavaScript, using a Mongo database.
   - for icons and placeholder images
 - [Tinify](https://tinypng.com/)
   - for compressing images
+- [Tags Input Beautifier](https://github.com/tovic/tags-input-beautifier)
+  - adapted code for recipe tag input
 
 ## Installation
 

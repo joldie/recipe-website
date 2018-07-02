@@ -34,7 +34,7 @@ if ($result !== null) {
   $tags = "";
   if ($result['tags'] != null) {
     foreach ($result['tags'] as $tag) {
-        $tags = $tags . "<span class='tag-display'>$tag</span>";
+        $tags = $tags . "<a href='index.php?tag=$tag'><span class='tag-display'>$tag</span></a>";
     }
   }
 

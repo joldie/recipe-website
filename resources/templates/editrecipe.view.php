@@ -13,6 +13,7 @@
 				<script>
 					config = {
 						escape: [',', ' ', ';'],
+						join: ',',
 						max: 10,
 						alert: false
 					};

@@ -19,6 +19,10 @@ if (isset($_POST['search'])) {
   // Search DB collection for recipes based on keywords (limit to 12 results)
   $recipes = $collection->find(['$text'=> ['$search'=>$search_string]],
     ['limit' => 12]);
+} elseif (isset($_GET['tag'])) {
+  // Get tag from URL, sanitise input and find all recipes tagged with that value
+  $tag = htmlspecialchars($_GET['tag']);
+  $recipes = $collection->find(['tags' => $tag]);
 } else {
   // Retrieve maximum 12 receipes from DB
   $recipes = $collection->find([], ['limit' => 12]);
