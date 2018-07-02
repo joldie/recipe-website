@@ -99,7 +99,7 @@ function compress_image($source_file) {
         
         //Resize the $thumb image and save as temp file
         imagecopyresampled($thumb, $image, 0, 0, 0, 0, $width, $height, $image_info[0], $image_info[1]);
-        $tempImage = "temp" . $image_type;
+        $tempImage = "temp." . $image_type;
         imagejpeg($thumb, $tempImage, $quality);
 
         break;
@@ -111,7 +111,7 @@ function compress_image($source_file) {
         
         //Resize the $thumb image and save as temp file
         imagecopyresampled($thumb, $image, 0, 0, 0, 0, $width, $height, $image_info[0], $image_info[1]);
-        $tempImage = "temp" . $image_type;
+        $tempImage = "temp." . $image_type;
         imagepng($thumb, $tempImage);
 
         break;
