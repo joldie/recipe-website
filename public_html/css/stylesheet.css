@@ -444,6 +444,12 @@ button {
   margin-bottom: 5px;
 }
 
+textarea {
+  border: 1px solid var(--dark-bg-color);
+  border-radius: 4px;
+  padding: 5px;
+}
+
 .no-shadow-no-border {
   border: 0;
   box-shadow: none;
