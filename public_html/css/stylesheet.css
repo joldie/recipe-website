@@ -436,6 +436,11 @@ input[type="number"] {
   text-align: right;
 }
 
+button {
+  padding: 0.3em;
+  margin-bottom: 5px;
+}
+
 .no-shadow-no-border {
   border: 0;
   box-shadow: none;
