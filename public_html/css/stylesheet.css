@@ -229,9 +229,8 @@ header h1::before {
 }
 
 .plusminus {
-  /*padding-bottom: 2px;
-  padding-top: 2px;*/
-  padding: 4px 6px;
+  height: 32px;
+  width: 32px;
 }
 
 .fa-minus,
@@ -438,7 +437,10 @@ input[type="number"] {
 }
 
 button {
-  padding: 0.3em;
+  background: var(--light-bg-color);
+  border: 1px solid var(--dark-bg-color);
+  border-radius: 4px;
+  padding: 0.5em;
   margin-bottom: 5px;
 }
 
