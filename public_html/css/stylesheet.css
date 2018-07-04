@@ -4,6 +4,7 @@
   /* Standard background, border, box colors */
   --main-bg-color: #efefef;
   --alt-bg-color: #356629;
+  --alt2-bg-color: #63ad51;
   --light-bg-color: white;
   --dark-bg-color: #ccc;
   /* Standard font colors */
@@ -44,6 +45,13 @@ h5 {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+input {
+  /* Override default styling for input elements. */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 body {
@@ -145,7 +153,7 @@ header h1::before {
   box-shadow: 2px 6px 25px rgba(0, 0, 0, 0.1);
 }
 
-.searchbox {
+#searchInput {
   background-color: var(--light-bg-color);
   background-image: url('../images/search-icon.png');
   background-position: 10px 10px;
@@ -267,7 +275,7 @@ header h1::before {
 }
 
 .small-input {
-  width: 100px;
+  width: 110px;
 }
 
 .save-button-text {
@@ -277,7 +285,7 @@ header h1::before {
 .tags {
   background-color: var(--light-bg-color);
   border: 1px solid var(--dark-bg-color);
-  border-radius: 5px;
+  border-radius: 4px;
   display: block;
   line-height: 1.25;
   padding: .25em 0 0 .25em;
@@ -293,11 +301,15 @@ header h1::before {
 
 .tags .tag,
 .tags-input {
-  background: var(--dark-bg-color);
+  background: var(--alt2-bg-color);
   margin: 0 .25em .25em 0;
   padding: .25em .5em;
   min-height: 1.5em;
   cursor: default;
+}
+
+.tag {
+  color: var(--light-bg-color);
 }
 
 .tags .tag:before {
@@ -314,7 +326,7 @@ header h1::before {
 .tags a {
   display: inline-block;
   margin: 0 0 0 .5em;
-  color: #fff;
+  color: var(--alt-txt-color);
   text-decoration: none;
   cursor: pointer;
 }
@@ -371,8 +383,10 @@ header h1::before {
 
 .tag-display {
   display: inline-block;
-  background: var(--light-bg-color);
-  border: 1px solid var(--dark-bg-color);
+  color: var(--light-bg-color);
+  background: var(--alt2-bg-color);
+  /*background: var(--light-bg-color);
+  border: 1px solid var(--dark-bg-color);*/
   border-radius: 3px;
   margin: 3px;
   padding: 2px 5px;
@@ -383,6 +397,7 @@ header h1::before {
   border-radius: 5px;
   display: inline-block;
   padding: 3px;
+  margin-bottom: 5px;
 }
 
 .ingredient-item-container {
@@ -401,6 +416,19 @@ header h1::before {
   /* Size image to fit screen, but limit max width */
   width: 90%;
   max-width: 400px;
+}
+
+input[type="text"],
+input[type="number"] {
+  border: 1px solid var(--dark-bg-color);
+  border-radius: 4px;
+  line-height: 1.25;
+  padding: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.ingredient-input input[id^="item"] {
+  margin-bottom: 0em;
 }
 
 .submit-buttons-div {
