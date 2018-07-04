@@ -1,18 +1,13 @@
 # To Do
 
 ## High priority
-- [ ] Add bugs as GitHub issues
-- [ ] CSS: Improve display on mobile phone, other browsers (e.g. input field sizes, styles). Need to reduce font size for small screens?
 - [ ] UX: (addrecipe.php, editrecipe.php) ability to delete arbitrary ingredient/step, not just the last one
 
 ## Medium priority
 - [ ] Code cleanup: Add comments to code, in particular functions in separate files
-- [ ] Code cleanup: remove unnecessary IDs from ingredients, steps? qty1, etc...
-- [ ] UX: (index.php) add more recipes to page dynamically as user scrolls down (test with showing 6 first, instead of 12)
-- [ ] Bug: (CSS) new ingredient/step input fields, as well as long tag input, expands width of div
+- [ ] UX: (index.php) add more recipes to page dynamically as user scrolls down (test with showing 6 first, instead of 12). Should improve loading speed, also.
 - [ ] Refactor: move recipeindb, deleterecipe to resources/library
 - [ ] Refactor: make insertrecipe.php, updaterecipe.php functions in library
-- [ ] Test viewing on variety of browsers
 - [ ] UX: (addrecipe.php) ingredient unit dropdown box
 - [ ] UX: (addrecipe.php, editrecipe.php) ability to move up and down (maybe drag with mouse/finger) position of ingredients or steps in list
 
@@ -22,7 +17,7 @@
 - [ ] UX: show suggestions for tags, based on a) master list; and/or b) previously used tag names
 - [ ] CSS: highlight/underline menu links on hover
 - [ ] UX: loading screen turns to tick for successful query, etc (instead of alert box)
-- [ ] Perform Lighthouse audit via Chrome
+- [ ] Improve Lighthouse audit report score (add HTTP/2, improve accessbility, PWA, etc)
 
 ## Future features
 - Publish site in German, also. Add ability in code to switch language between EN/DE

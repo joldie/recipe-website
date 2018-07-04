@@ -482,6 +482,7 @@ footer {
   /* Footer stays at bottom of page. */
   bottom: 0;
   height: 90px;
+  width: 100%;
   position: absolute;
   display: flex;
   justify-content: center;
