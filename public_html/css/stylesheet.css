@@ -229,8 +229,8 @@ header h1::before {
 }
 
 .plusminus {
-  height: 32px;
-  width: 32px;
+  height: 35px;
+  width: 35px;
 }
 
 .fa-minus,
@@ -385,8 +385,6 @@ header h1::before {
   display: inline-block;
   color: var(--light-bg-color);
   background: var(--alt2-bg-color);
-  /*background: var(--light-bg-color);
-  border: 1px solid var(--dark-bg-color);*/
   border-radius: 3px;
   margin: 3px;
   padding: 2px 5px;
