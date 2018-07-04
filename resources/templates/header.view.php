@@ -11,13 +11,19 @@
 	<!-- Mobile specific data -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- CSS, Font and Favicon -->
+	<!-- Web app manifest, theme colour and favicon -->
+	<link rel="manifest" href="/manifest.json">
+	<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="images/icon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="images/icon-16x16.png">
+	<meta name="theme-color" content="#356629"/>
+
+	<!-- CSS and Font -->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link href="https://fonts.googleapis.com/css?family=Cutive+Mono:400,700" rel="stylesheet">
 	<link rel="stylesheet" href="css/stylesheet.css">
 	<link rel="stylesheet" href="css/responsive.css">
-	<link rel="icon" type="image/png" href="images/favicon.svg">
 
 </head>
 

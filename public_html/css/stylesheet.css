@@ -481,15 +481,17 @@ blockquote a {
 footer {
   /* Footer stays at bottom of page. */
   bottom: 0;
-  color: var(--light-txt-color);
-  font-size: 75%;
   height: 90px;
-  left: 0;
-  padding-left: 10px;
-  padding-right: 10px;
   position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-content {
+  width: 90%;
+  border-top: 2px solid var(--alt2-bg-color);
   text-align: center;
-  width: 100%;
+  padding-top: 10px;
 }
 
 footer a {
