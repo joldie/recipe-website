@@ -1,7 +1,7 @@
 <main>
 	<div class="flex-container-centered">
 		<div class="add-recipe-container">
-			<form id="formInput" method="post" enctype="multipart/form-data">
+			<form id="formInput" class="full-width" method="post" enctype="multipart/form-data">
 				<h1><?php echo $main_header; ?></h1>
 				<h3>Recipe name:</h3>
 				<input type="text" class="full-width" id="recipe-name" name="name" maxlength="100" placeholder="Recipe name" value="<?php echo $recipe_name; ?>" autofocus required />
