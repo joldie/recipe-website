@@ -244,6 +244,11 @@ header h1::before {
   margin-top: 20px;
 }
 
+.recipe-content-lists h3 {
+  border-bottom: 2px solid var(--alt2-bg-color);
+  padding-bottom: 5px;
+}
+
 .normal-margins {
   margin: 20px;
 }
@@ -458,6 +463,7 @@ textarea {
 blockquote {
   display: block;
   background: var(--main-bg-color);
+  margin: 15px;
   padding: 15px 20px 15px 30px;
   position: relative;
   color: var(--light-txt-color);
@@ -493,11 +499,6 @@ footer {
   border-top: 2px solid var(--alt2-bg-color);
   text-align: center;
   padding-top: 10px;
-}
-
-footer a {
-  text-decoration: underline;
-  text-decoration-style: dotted;
 }
 
 footer hr {
