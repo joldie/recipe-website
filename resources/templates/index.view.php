@@ -9,4 +9,7 @@
 	<div class="grid-container">
 		<?php echo $cards_html; ?>
 	</div>
+	<div id="div-load-more" onclick="return loadMoreRecipes();">
+		<button id="button-load-more">Load more recipes...</button>
+	</div>
 </main>

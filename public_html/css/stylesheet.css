@@ -205,6 +205,18 @@ header h1::before {
   padding: 10px;
 }
 
+#div-load-more {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+#button-load-more {
+  font-weight: bold;
+  padding: 15px;
+}
+
 .recipe-content-grid {
   display: grid;
   grid-gap: 25px;

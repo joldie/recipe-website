@@ -11,21 +11,41 @@ require_once '../config.php';
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
 
+const INITIAL_DISPLAY_COUNT = 6;
+
 if (isset($_POST['search'])) {
   // Extract all words from search text (ignoring punctuation, special chars)
   $delimiters = array("\n", "\t", ",", ".", "!", "?", ":", ";", "'", '"');
   $search_string = str_replace($delimiters, " ", $_POST['search']);
 
-  // Search DB collection for recipes based on keywords (limit to 12 results)
+  // Search DB collection for recipes based on keywords
+  // First, retrieve list of recipe IDs and names
+  $all_recipe_ids = $collection->find(['$text'=> ['$search'=>$search_string]], ['_id'=>true, 'name'=>true]);
+
+  // Retrieve recipes, up to initial display maximum
   $recipes = $collection->find(['$text'=> ['$search'=>$search_string]],
-    ['limit' => 12]);
+    ['limit' => INITIAL_DISPLAY_COUNT]);
+
 } elseif (isset($_GET['tag'])) {
   // Get tag from URL, sanitise input and find all recipes tagged with that value
   $tag = htmlspecialchars($_GET['tag']);
-  $recipes = $collection->find(['tags' => $tag]);
+
+  // Search DB collection for recipes based on tags
+  // First, retrieve list of recipe IDs and names
+  $all_recipe_ids = $collection->find(['tags' => $tag], ['_id'=>true, 'name'=>true]);
+
+  // Retrieve recipes, up to initial display maximum
+  $recipes = $collection->find(['tags' => $tag], ['limit' => INITIAL_DISPLAY_COUNT]);
+
 } else {
-  // Retrieve maximum 12 receipes from DB
-  $recipes = $collection->find([], ['limit' => 12]);
+
+  // Search DB collection for all recipes
+  // First, retrieve list of recipe IDs and names
+  $all_recipe_ids = $collection->find([], ['_id'=>true, 'name'=>true]);
+  
+  // Retrieve recipes, up to initial display maximum
+  $recipes = $collection->find([], ['limit' => INITIAL_DISPLAY_COUNT]);
+  
 }
 
 /*
@@ -36,7 +56,7 @@ if (isset($_POST['search'])) {
 
 require_once LIBRARY_PATH . "/recipeCardFunctions.php";
 
-$cards_html = generate_cards_html($recipes);
+$cards_html = generate_cards_html($recipes, $all_recipe_ids);
 
 /*
 |--------------------------------------------------------------------------
