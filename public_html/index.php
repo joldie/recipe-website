@@ -11,7 +11,7 @@ require_once '../config.php';
 // Connect to database
 require  LIBRARY_PATH . '/connectdb.php';
 
-const INITIAL_DISPLAY_COUNT = 6;
+const INITIAL_DISPLAY_COUNT = 12;
 
 if (isset($_POST['search'])) {
   // Extract all words from search text (ignoring punctuation, special chars)
@@ -20,11 +20,11 @@ if (isset($_POST['search'])) {
 
   // Search DB collection for recipes based on keywords
   // First, retrieve list of recipe IDs and names
-  $all_recipe_ids = $collection->find(['$text'=> ['$search'=>$search_string]], ['_id'=>true, 'name'=>true]);
+  $all_recipe_ids = $collection->find(['$text'=> ['$search'=>$search_string]], ['_id'=>true, 'name'=>true, 'sort'=>['_id'=>-1]]);
 
   // Retrieve recipes, up to initial display maximum
   $recipes = $collection->find(['$text'=> ['$search'=>$search_string]],
-    ['limit' => INITIAL_DISPLAY_COUNT]);
+    ['limit' => INITIAL_DISPLAY_COUNT, 'sort'=>['_id'=>-1]]);
 
 } elseif (isset($_GET['tag'])) {
   // Get tag from URL, sanitise input and find all recipes tagged with that value
@@ -32,19 +32,19 @@ if (isset($_POST['search'])) {
 
   // Search DB collection for recipes based on tags
   // First, retrieve list of recipe IDs and names
-  $all_recipe_ids = $collection->find(['tags' => $tag], ['_id'=>true, 'name'=>true]);
+  $all_recipe_ids = $collection->find(['tags' => $tag], ['_id'=>true, 'name'=>true, 'sort'=>['_id'=>-1]]);
 
   // Retrieve recipes, up to initial display maximum
-  $recipes = $collection->find(['tags' => $tag], ['limit' => INITIAL_DISPLAY_COUNT]);
+  $recipes = $collection->find(['tags' => $tag], ['limit' => INITIAL_DISPLAY_COUNT, 'sort'=>['_id'=>-1]]);
 
 } else {
 
   // Search DB collection for all recipes
   // First, retrieve list of recipe IDs and names
-  $all_recipe_ids = $collection->find([], ['_id'=>true, 'name'=>true]);
+  $all_recipe_ids = $collection->find([], ['_id'=>true, 'name'=>true, 'sort'=>['_id'=>-1]]);
   
   // Retrieve recipes, up to initial display maximum
-  $recipes = $collection->find([], ['limit' => INITIAL_DISPLAY_COUNT]);
+  $recipes = $collection->find([], ['limit' => INITIAL_DISPLAY_COUNT, 'sort'=>['_id'=>-1]]);
   
 }
 

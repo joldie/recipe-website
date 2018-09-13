@@ -11,10 +11,11 @@ function checkFormData() {
 
 // Loads a new batch of recipes from the database, displaying HTML card divs for each
 function loadMoreRecipes() {
+  const BATCH_SIZE = 6;
   let countLoaded = 0;
   let cards = document.getElementsByClassName('card-link');
   for (let i = 0; i < cards.length; i++) {
-    if (cards[i].getAttribute('data-image-loaded') == "false" && countLoaded < 6) {
+    if (cards[i].getAttribute('data-image-loaded') == "false" && countLoaded < BATCH_SIZE) {
       // Get recipe image from database in form of base64-encoded URL
       fetch('getrecipeimage.php', {
         method: "post",
