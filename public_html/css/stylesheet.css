@@ -710,6 +710,49 @@ blockquote a:hover {
   }
 }
 
+/* HashOver commenting system custom formatting */
+
+#hashover {
+  margin-top: 50px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.hashover-dashed-title {
+  border-bottom: 2px solid var(--alt2-bg-color) !important;
+}
+
+.hashover-main-title {
+  font-weight: bold;
+}
+
+#hashover,
+#hashover-main-name,
+#hashover-main-comment {
+  color: var(--main-txt-color);
+  font-family: 'Cutive Mono', sans-serif;
+}
+
+#hashover-post-button,
+#hashover-sort-select {
+  font-family: 'Cutive Mono', sans-serif;
+}
+
+#hashover-main-formatting,
+#hashover-end-links {
+  display: none;
+}
+
+span[id^="hashover-reply-formatting"] {
+  display: none !important;
+}
+
+input[id^="hashover-main-name"],
+input[id^="hashover-reply-post"],
+textarea[id^="hashover-reply-comment"] {
+  font-family: 'Cutive Mono', sans-serif !important;
+}
+
 /* For debugging only: */
 
 /*
