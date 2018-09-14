@@ -5,7 +5,6 @@
 
 ## Medium priority
 - [ ] Code cleanup: Add comments to code, in particular functions in separate files
-- [ ] UX: (index.php) add more recipes to page dynamically as user scrolls down (test with showing 6 first, instead of 12). Should improve loading speed, also.
 - [ ] Refactor: move recipeindb, deleterecipe to resources/library
 - [ ] Refactor: make insertrecipe.php, updaterecipe.php functions in library
 - [ ] UX: (addrecipe.php) ingredient unit dropdown box
@@ -21,10 +20,10 @@
 - [ ] CSS: highlight/underline menu links on hover
 - [ ] UX: loading screen turns to tick for successful query, etc (instead of alert box)
 - [ ] Improve Lighthouse audit report score (add HTTP/2, improve accessbility, PWA, etc)
-- [ ] Include ability for viewers/users to add comments below recipes
 - [ ] Implement a basic user login system (username & password only) for creating/editing recipes, commenting, etc.
 - [ ] Include lightweight sharing buttons for Facebook, Twitter, etc
 - [ ] Setup Google Analytics, or similar
+- [ ] UX: (index.php) lazy load recipes as user scrolls down main page, instead of having to click "Load more recipes" button
 
 ## Future features
 - Publish site in German, also. Add ability in code to switch language between EN/DE
