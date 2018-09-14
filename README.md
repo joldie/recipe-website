@@ -7,6 +7,7 @@ Website for posting and finding vegan food recipes.
       - [External libraries/tools used](#external-librariestools-used)
   - [Installation](#installation)
       - [Mongo database collection](#mongo-database-collection)
+      - [HashOver commenting system setup](#hashover-commenting-system-setup)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -24,6 +25,7 @@ Written in PHP / HTML5 / CSS3 / JavaScript, using a Mongo database.
   - for icons and placeholder images
 - [Tags Input Beautifier](https://github.com/tovic/tags-input-beautifier)
   - adapted code for recipe tag input
+- [HashOver commenting system](https://github.com/jacobwb/hashover-next)
 
 ## Installation
 
@@ -62,7 +64,7 @@ $config = array(
 define("IMAGES_PATH", realpath(dirname(__FILE__)) . '/public_html/images');
 define("TEMPLATES_PATH", realpath(dirname(__FILE__)) . '/resources/templates');
 define("LIBRARY_PATH", realpath(dirname(__FILE__)) . '/resources/library');
- ```
+```
 
 #### Mongo database collection
 
@@ -84,6 +86,42 @@ Collection name = `recipe`
 | `steps`       | Ordered list of steps describing how to make recipe                                                                                                                                                | text array |
 | `image`       | Photo of recipe, stored as a binary blob                                                                                                                                                           | binary     |
 | `image_type`  | Image format (JPG or PNG)                                                                                                                                                                          | text       |
+
+#### HashOver commenting system setup
+
+Install dependencies (Debian/Ubuntu package names shown):
+- php-mbstring
+- php-xml
+- php-json
+
+Download [hashover](https://github.com/jacobwb/hashover-next/tree/master/hashover) folder and place in `public_html/vendor/`.
+
+Set group-owner of folder to www-data:
+`sudo chgrp -R www-data hashover/`
+
+Apply permissions to the following folders:
+- `hashover/` (644)
+- `hashover/comments/` (775)
+- `hashover/config/` (775)
+
+Edit `hashover/backend/classes/secrets.php` file, saving unique values for the following values:
+- `$notificationEmail`
+- `$encryptionKey`
+- `$adminName`
+- `$adminPassword`
+
+Edit `hashover/backend/classes/settings.php` file, overwriting default field options (done this way as unable to find proper method - documentation insufficient):
+```php
+// Starting line 168:
+		$this->fieldOptions['name'] = true;
+		$this->fieldOptions['password'] = false;
+		$this->fieldOptions['email'] = false;
+		$this->fieldOptions['website'] = false;
+```
+
+Restart Apache web server.
+
+Visit administration page (http://site-url.com/vendor/hashover/admin/) and set desired defaults for time/date format, avatar icons, etc.
 
 ## Contributing
 

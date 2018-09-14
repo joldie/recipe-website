@@ -50,6 +50,8 @@
 		</a>
 		<button onclick="confirmDelete();"><i class="fas fa-trash"></i> Delete</button>
 		</div>
+
+<!-- HashOver commenting system JS script -->
 <?php
 	echo "\r\n<script src='vendor/hashover/comments.php' type='text/javascript'></script>";
 	echo "\r\n<noscript>You must have JavaScript enabled to use the comments.</noscript>";

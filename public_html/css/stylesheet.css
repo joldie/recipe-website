@@ -718,10 +718,6 @@ blockquote a:hover {
   margin-right: 5%;
 }
 
-.hashover-dashed-title {
-  border-bottom: 2px solid var(--alt2-bg-color) !important;
-}
-
 .hashover-main-title {
   font-weight: bold;
 }
@@ -741,6 +737,12 @@ blockquote a:hover {
 #hashover-main-formatting,
 #hashover-end-links {
   display: none;
+}
+
+/* !important rule required for dynamically created elements: */
+
+.hashover-dashed-title {
+  border-bottom: 2px solid var(--alt2-bg-color) !important;
 }
 
 span[id^="hashover-reply-formatting"] {
