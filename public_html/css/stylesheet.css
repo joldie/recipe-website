@@ -710,7 +710,9 @@ blockquote a:hover {
   }
 }
 
-/* HashOver commenting system custom formatting */
+/* HashOver commenting system custom formatting
+   Note: !important rule required for overriding rules on dynamically created elements.
+*/
 
 #hashover {
   margin-top: 50px;
@@ -720,6 +722,8 @@ blockquote a:hover {
 
 .hashover-main-title {
   font-weight: bold;
+  padding-bottom: 0 !important;
+  margin-bottom: 15px !important;
 }
 
 #hashover,
@@ -738,8 +742,6 @@ blockquote a:hover {
 #hashover-end-links {
   display: none;
 }
-
-/* !important rule required for dynamically created elements: */
 
 .hashover-dashed-title {
   border-bottom: 2px solid var(--alt2-bg-color) !important;
