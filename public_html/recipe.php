@@ -55,8 +55,10 @@ if ($result !== null) {
   }
 
   $ingredients = "";
+  $ingredients_text = array();
   foreach ($result['ingredients'] as $ingredient) {
-      $ingredients = $ingredients . "<li>{$ingredient['qty']} {$ingredient['unit']} {$ingredient['item']}</li>";
+      $ingredients = $ingredients . "<li>{$ingredient['qty']} {$ingredient['uni$
+      array_push($ingredients_text, trim(str_replace("  ", " ", $ingredient['qt$
   }
 
   $steps = "";

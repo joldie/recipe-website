@@ -57,5 +57,34 @@
 	echo "\r\n<noscript>You must have JavaScript enabled to use the comments.</noscript>";
 ?>
 
+<!-- schema.org JSON-LD data -->
+<?php
+		$keywords = "";
+		if ($result['tags'] != null) {
+		  foreach ($result['tags'] as $tag) {
+			  $keywords = $tag . "," . $keywords;
+		  }
+		}
+
+        $schemadata = array(
+        "@context" => "http://schema.org",
+        "@type" => "Recipe",
+        "name" => $recipe_name,
+        "description" => $recipe_description,
+		"keywords" => $keywords,
+        "image" => "",
+        "prepTime" => "PT" . $preptime . "M",
+        "cookTime" => "PT" . $cooktime . "M",
+        "recipeYield" => intval($serves),
+        "recipeIngredient" => $ingredients_text,
+		"recipeInstructions" => $result['steps'],
+		"url" => "https://recipes-rebooted.com/recipe.php?id=" . $id
+        );
+
+        echo "\r\n<script type='application/ld+json'>";
+        echo json_encode($schemadata, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        echo "\r\n</script>";
+?>
+
 </div>
 </main>
